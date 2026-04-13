@@ -1,5 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
+import WhatsAppButton from "./WhatsAppButton";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -7,6 +8,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       <main className="flex-1 pt-20">{children}</main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 };
