@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { ArrowRight } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import philosophyImg from "@/assets/philosophy.jpg";
 import heroBanner from "@/assets/hero-banner.jpg";
 import productsCollection from "@/assets/products-collection.jpeg";
@@ -33,10 +34,12 @@ const articles = [
 ];
 
 const Journal = () => {
+  const revealRef = useScrollReveal();
+
   return (
     <Layout>
-      <section className="container mx-auto px-6 lg:px-12 py-16 md:py-24">
-        <div className="text-center mb-14">
+      <section className="container mx-auto px-6 lg:px-12 py-16 md:py-24" ref={revealRef}>
+        <div className="text-center mb-14" data-reveal>
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
             Actualités & Conseils
           </p>
@@ -44,16 +47,16 @@ const Journal = () => {
         </div>
 
         {/* Featured Article */}
-        <Link to="#" className="group block mb-16">
+        <Link to="#" className="group block mb-16" data-reveal>
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="aspect-[4/3] overflow-hidden bg-secondary">
+            <div className="aspect-[4/3] overflow-hidden bg-secondary img-zoom">
               <img
                 src={articles[0].image}
                 alt={articles[0].title}
                 loading="lazy"
                 width={1024}
                 height={1024}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
             </div>
             <div className="space-y-4">
@@ -63,12 +66,12 @@ const Journal = () => {
                 </span>
                 <span className="font-sans text-xs text-muted-foreground">{articles[0].date}</span>
               </div>
-              <h2 className="font-serif text-2xl md:text-3xl font-light leading-tight group-hover:text-accent transition-colors">
+              <h2 className="font-serif text-2xl md:text-3xl font-light leading-tight group-hover:text-accent transition-colors duration-300">
                 {articles[0].title}
               </h2>
               <p className="font-sans text-sm text-muted-foreground leading-relaxed">{articles[0].excerpt}</p>
-              <span className="inline-flex items-center gap-2 font-sans text-xs font-semibold tracking-widest uppercase text-foreground">
-                Lire l'article <ArrowRight size={12} />
+              <span className="inline-flex items-center gap-2 font-sans text-xs font-semibold tracking-widest uppercase text-foreground group-hover:text-accent transition-colors duration-300">
+                Lire l'article <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </div>
           </div>
@@ -76,16 +79,22 @@ const Journal = () => {
 
         {/* Other Articles */}
         <div className="grid md:grid-cols-2 gap-10">
-          {articles.slice(1).map((article) => (
-            <Link to="#" key={article.id} className="group">
-              <div className="aspect-[3/2] overflow-hidden bg-secondary mb-5">
+          {articles.slice(1).map((article, i) => (
+            <Link
+              to="#"
+              key={article.id}
+              className="group"
+              data-reveal
+              data-reveal-delay={i * 150}
+            >
+              <div className="aspect-[3/2] overflow-hidden bg-secondary mb-5 img-zoom hover-glow">
                 <img
                   src={article.image}
                   alt={article.title}
                   loading="lazy"
                   width={1024}
                   height={1024}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="flex items-center gap-4 mb-3">
@@ -94,7 +103,7 @@ const Journal = () => {
                 </span>
                 <span className="font-sans text-xs text-muted-foreground">{article.date}</span>
               </div>
-              <h3 className="font-serif text-xl font-medium mb-2 group-hover:text-accent transition-colors">
+              <h3 className="font-serif text-xl font-medium mb-2 group-hover:text-accent transition-colors duration-300">
                 {article.title}
               </h3>
               <p className="font-sans text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>

@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import philosophyImg from "@/assets/philosophy.jpg";
 import heroBanner from "@/assets/hero-banner.jpg";
 import { Leaf, Heart, Shield, Sparkles } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const values = [
   {
@@ -27,6 +28,8 @@ const values = [
 ];
 
 const Philosophie = () => {
+  const revealRef = useScrollReveal();
+
   return (
     <Layout>
       {/* Hero */}
@@ -45,69 +48,76 @@ const Philosophie = () => {
         </div>
       </section>
 
-      {/* Mission */}
-      <section className="container mx-auto px-6 lg:px-12 py-20 md:py-28">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
-              Notre Mission
-            </p>
-            <h2 className="font-serif text-3xl md:text-4xl font-light leading-tight mb-6">
-              Sublimer la beauté
-              <br />
-              <span className="italic">authentique</span>
-            </h2>
-            <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
-              STEFCOS TOGO SARL est née de la conviction que la beauté authentique mérite des soins d'exception. Depuis notre création, nous nous engageons à formuler des produits cosmétiques qui célèbrent et subliment la richesse des peaux noires et mixtes.
-            </p>
-            <p className="font-sans text-sm leading-relaxed text-muted-foreground">
-              Notre laboratoire, situé au cœur de Lomé, combine expertise scientifique et savoir-faire traditionnel pour créer des formules uniques, alliant efficacité et douceur.
-            </p>
+      <div ref={revealRef}>
+        {/* Mission */}
+        <section className="container mx-auto px-6 lg:px-12 py-20 md:py-28">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div data-reveal="left">
+              <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
+                Notre Mission
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl font-light leading-tight mb-6">
+                Sublimer la beauté
+                <br />
+                <span className="italic">authentique</span>
+              </h2>
+              <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
+                STEFCOS TOGO SARL est née de la conviction que la beauté authentique mérite des soins d'exception. Depuis notre création, nous nous engageons à formuler des produits cosmétiques qui célèbrent et subliment la richesse des peaux noires et mixtes.
+              </p>
+              <p className="font-sans text-sm leading-relaxed text-muted-foreground">
+                Notre laboratoire, situé au cœur de Lomé, combine expertise scientifique et savoir-faire traditionnel pour créer des formules uniques, alliant efficacité et douceur.
+              </p>
+            </div>
+            <div className="aspect-[4/5] overflow-hidden img-zoom" data-reveal="right">
+              <img
+                src={philosophyImg}
+                alt="Notre équipe"
+                loading="lazy"
+                width={1024}
+                height={1024}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
-          <div className="aspect-[4/5] overflow-hidden">
-            <img
-              src={philosophyImg}
-              alt="Notre équipe"
-              loading="lazy"
-              width={1024}
-              height={1024}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Values */}
-      <section className="bg-secondary py-20 md:py-28">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16">
-            <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
-              Ce Qui Nous Anime
-            </p>
-            <h2 className="font-serif text-3xl md:text-4xl font-light">Nos Valeurs</h2>
+        {/* Values */}
+        <section className="bg-secondary py-20 md:py-28">
+          <div className="container mx-auto px-6 lg:px-12">
+            <div className="text-center mb-16" data-reveal>
+              <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
+                Ce Qui Nous Anime
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl font-light">Nos Valeurs</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+              {values.map((value, i) => (
+                <div
+                  key={value.title}
+                  className="text-center group cursor-default"
+                  data-reveal="scale"
+                  data-reveal-delay={i * 100}
+                >
+                  <value.icon size={32} className="mx-auto mb-4 text-accent transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" />
+                  <h3 className="font-serif text-xl font-medium mb-3">{value.title}</h3>
+                  <p className="font-sans text-sm leading-relaxed text-muted-foreground">{value.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            {values.map((value) => (
-              <div key={value.title} className="text-center">
-                <value.icon size={32} className="mx-auto mb-4 text-accent" />
-                <h3 className="font-serif text-xl font-medium mb-3">{value.title}</h3>
-                <p className="font-sans text-sm leading-relaxed text-muted-foreground">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Promise */}
-      <section className="container mx-auto px-6 lg:px-12 py-20 md:py-28 text-center max-w-3xl">
-        <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
-          Notre Engagement
-        </p>
-        <h2 className="font-serif text-3xl md:text-4xl font-light italic leading-relaxed mb-6">
-          "Chaque peau est unique. Chaque soin STEFCOS est une promesse de beauté, d'éclat et de confiance."
-        </h2>
-        <p className="font-sans text-sm text-muted-foreground">— L'équipe STEFCOS</p>
-      </section>
+        {/* Promise */}
+        <section className="container mx-auto px-6 lg:px-12 py-20 md:py-28 text-center max-w-3xl" data-reveal>
+          <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
+            Notre Engagement
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl font-light italic leading-relaxed mb-6">
+            "Chaque peau est unique. Chaque soin STEFCOS est une promesse de beauté, d'éclat et de confiance."
+          </h2>
+          <p className="font-sans text-sm text-muted-foreground">— L'équipe STEFCOS</p>
+        </section>
+      </div>
     </Layout>
   );
 };
