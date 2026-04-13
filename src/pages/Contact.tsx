@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const revealRef = useScrollReveal();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -13,8 +15,8 @@ const Contact = () => {
 
   return (
     <Layout>
-      <section className="container mx-auto px-6 lg:px-12 py-16 md:py-24">
-        <div className="text-center mb-14">
+      <section className="container mx-auto px-6 lg:px-12 py-16 md:py-24" ref={revealRef}>
+        <div className="text-center mb-14" data-reveal>
           <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
             Parlons Ensemble
           </p>
@@ -23,7 +25,7 @@ const Contact = () => {
 
         <div className="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
           {/* Contact Info */}
-          <div className="space-y-10">
+          <div className="space-y-10" data-reveal="left">
             <div>
               <h2 className="font-serif text-2xl font-light mb-6">Restons en Contact</h2>
               <p className="font-sans text-sm text-muted-foreground leading-relaxed">
@@ -32,8 +34,8 @@ const Contact = () => {
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <MapPin size={20} className="text-accent mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-4 group cursor-default">
+                <MapPin size={20} className="text-accent mt-0.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
                 <div>
                   <h4 className="font-sans text-sm font-semibold mb-1">Adresse</h4>
                   <p className="font-sans text-sm text-muted-foreground">
@@ -46,8 +48,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <Phone size={20} className="text-accent mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-4 group cursor-default">
+                <Phone size={20} className="text-accent mt-0.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
                 <div>
                   <h4 className="font-sans text-sm font-semibold mb-1">Téléphone</h4>
                   <div className="font-sans text-sm text-muted-foreground space-y-1">
@@ -59,8 +61,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <Mail size={20} className="text-accent mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-4 group cursor-default">
+                <Mail size={20} className="text-accent mt-0.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
                 <div>
                   <h4 className="font-sans text-sm font-semibold mb-1">Email</h4>
                   <p className="font-sans text-sm text-muted-foreground">contact@stefcos.com</p>
@@ -70,7 +72,7 @@ const Contact = () => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6" data-reveal="right">
             <div>
               <label className="font-sans text-xs font-semibold tracking-widest uppercase text-muted-foreground block mb-2">
                 Nom complet
@@ -80,7 +82,7 @@ const Contact = () => {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-300"
                 placeholder="Votre nom"
               />
             </div>
@@ -93,7 +95,7 @@ const Contact = () => {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-300"
                 placeholder="votre@email.com"
               />
             </div>
@@ -106,7 +108,7 @@ const Contact = () => {
                 required
                 value={formData.subject}
                 onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors"
+                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-300"
                 placeholder="Sujet de votre message"
               />
             </div>
@@ -119,16 +121,16 @@ const Contact = () => {
                 rows={5}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors resize-none"
+                className="w-full bg-transparent border-b border-border py-3 font-sans text-sm text-foreground focus:outline-none focus:border-accent transition-colors duration-300 resize-none"
                 placeholder="Votre message..."
               />
             </div>
             <button
               type="submit"
-              className="inline-flex items-center gap-3 bg-primary text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-primary/90 transition-colors"
+              className="group inline-flex items-center gap-3 bg-primary text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-primary/90 hover:gap-5 transition-all duration-300"
             >
               Envoyer
-              <Send size={14} />
+              <Send size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </form>
         </div>
