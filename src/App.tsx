@@ -3,8 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { CartProvider } from "@/contexts/CartContext";
+import CartDrawer from "@/components/CartDrawer";
 import Index from "./pages/Index.tsx";
 import Boutique from "./pages/Boutique.tsx";
+import ProductDetail from "./pages/ProductDetail.tsx";
 import Philosophie from "./pages/Philosophie.tsx";
 import Journal from "./pages/Journal.tsx";
 import Contact from "./pages/Contact.tsx";
@@ -15,18 +18,22 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/boutique" element={<Boutique />} />
-          <Route path="/philosophie" element={<Philosophie />} />
-          <Route path="/journal" element={<Journal />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <CartProvider>
+        <Toaster />
+        <Sonner />
+        <CartDrawer />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/boutique" element={<Boutique />} />
+            <Route path="/boutique/:id" element={<ProductDetail />} />
+            <Route path="/philosophie" element={<Philosophie />} />
+            <Route path="/journal" element={<Journal />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
