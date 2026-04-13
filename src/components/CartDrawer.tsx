@@ -8,6 +8,16 @@ const formatPrice = (price: number) =>
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
 
+  const buildWhatsAppUrl = () => {
+    const phone = "22879792325";
+    let message = "🛒 *Nouvelle commande STEFCOS*\n\n";
+    items.forEach(({ product, quantity }) => {
+      message += `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(product.price * quantity)}\n`;
+    });
+    message += `\n💰 *Total : ${formatPrice(totalPrice)}*\n\nMerci de confirmer ma commande !`;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  };
+
   if (!isOpen) return null;
 
   return (
