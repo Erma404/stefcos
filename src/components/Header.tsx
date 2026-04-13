@@ -41,10 +41,14 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-foreground hover:text-accent transition-colors" aria-label="Panier">
+            <button
+              onClick={() => openCart(true)}
+              className="relative p-2 text-foreground hover:text-accent transition-colors"
+              aria-label="Panier"
+            >
               <ShoppingBag size={20} />
               <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-accent text-accent-foreground text-[10px] font-sans font-bold rounded-full flex items-center justify-center">
-                0
+                {totalItems}
               </span>
             </button>
             <button
