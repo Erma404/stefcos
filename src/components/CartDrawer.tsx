@@ -9,7 +9,7 @@ const CartDrawer = () => {
   const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
 
   const buildWhatsAppUrl = () => {
-    const phone = "22879792325";
+    const phone = "22893684943";
     let message = "🛒 *Nouvelle commande STEFCOS*\n\n";
     items.forEach(({ product, quantity }) => {
       message += `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(product.price * quantity)}\n`;

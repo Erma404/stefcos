@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 
-const PHONE = "22879792325";
+const PHONE = "22893684943";
 const MESSAGE = "Bonjour STEFCOS 👋, je souhaite avoir des informations sur vos produits.";
 
 const WhatsAppButton = () => {
