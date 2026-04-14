@@ -1,6 +1,7 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import WhatsAppButton from "./WhatsAppButton";
+import ExitIntentSidebar from "./ExitIntentSidebar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -9,6 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <main className="flex-1 pt-20">{children}</main>
       <Footer />
       <WhatsAppButton />
+      <ExitIntentSidebar />
     </div>
   );
 };

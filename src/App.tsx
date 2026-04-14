@@ -10,6 +10,7 @@ import Boutique from "./pages/Boutique.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
 import Philosophie from "./pages/Philosophie.tsx";
 import Journal from "./pages/Journal.tsx";
+import ArticleDetail from "./pages/ArticleDetail.tsx";
 import Contact from "./pages/Contact.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/boutique/:id" element={<ProductDetail />} />
             <Route path="/philosophie" element={<Philosophie />} />
             <Route path="/journal" element={<Journal />} />
+            <Route path="/journal/:slug" element={<ArticleDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
