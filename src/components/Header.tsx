@@ -4,7 +4,7 @@ import { Menu, X, ShoppingBag } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
-  { label: "Accueil", path: "/" },
+  
   { label: "Boutique", path: "/boutique" },
   { label: "Philosophie", path: "/philosophie" },
   { label: "Journal", path: "/journal" },
