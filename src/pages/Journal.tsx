@@ -12,11 +12,6 @@ const Journal = () => {
 
   return (
     <Layout>
-      <Helmet>
-        <title>Journal Beauté - STEFCOS | Conseils Soins Peaux Noires & Mixtes</title>
-        <meta name="description" content="Découvrez nos articles et conseils d'experts pour sublimer les peaux noires et mixtes. Routines beauté, ingrédients naturels africains et tendances cosmétiques." />
-        <link rel="canonical" href="https://stefcos-radiance-hub.lovable.app/journal" />
-      </Helmet>
 
       <section className="container mx-auto px-6 lg:px-12 py-16 md:py-24" ref={revealRef}>
         <div className="text-center mb-14" data-reveal>
