@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import { ArrowRight, Clock, Calendar } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { articles } from "@/data/articles";
-import { Helmet } from "react-helmet-async";
+
 
 const Journal = () => {
   const revealRef = useScrollReveal();
