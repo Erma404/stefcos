@@ -4,7 +4,7 @@ import { X, ArrowRight } from "lucide-react";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 
-const INACTIVITY_DELAY = 45_000; // 45 seconds
+const INACTIVITY_DELAY = 180_000; // 3 minutes
 
 const ExitIntentSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
