@@ -18,6 +18,8 @@ const ProductDetail = () => {
   const product = products.find((p) => p.id === id);
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const images = product?.gallery?.length ? product.gallery : product ? [product.image] : [];
+  const [selectedImage, setSelectedImage] = useState(0);
 
   if (!product) {
     return (
@@ -50,19 +52,38 @@ const ProductDetail = () => {
       {/* Product */}
       <section className="container mx-auto px-6 lg:px-12 py-10 md:py-16">
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
-          {/* Image */}
-          <div className="relative aspect-square bg-secondary rounded-sm overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover"
-              width={800}
-              height={800}
-            />
-            {product.badge && (
-              <span className="absolute top-6 left-6 bg-accent text-accent-foreground font-sans text-[10px] font-semibold tracking-widest uppercase px-4 py-2">
-                {product.badge}
-              </span>
+          {/* Image + Galerie */}
+          <div className="flex flex-col gap-3">
+            {/* Image principale */}
+            <div className="relative aspect-square bg-secondary rounded-sm overflow-hidden">
+              <img
+                src={images[selectedImage]}
+                alt={product.name}
+                className="w-full h-full object-contain"
+                width={800}
+                height={800}
+              />
+              {product.badge && (
+                <span className="absolute top-6 left-6 bg-accent text-accent-foreground font-sans text-[10px] font-semibold tracking-widest uppercase px-4 py-2">
+                  {product.badge}
+                </span>
+              )}
+            </div>
+            {/* Miniatures */}
+            {images.length > 1 && (
+              <div className="flex gap-2">
+                {images.map((src, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedImage(i)}
+                    className={`relative w-20 h-20 flex-shrink-0 bg-secondary rounded-sm overflow-hidden border-2 transition-colors ${
+                      i === selectedImage ? "border-accent" : "border-transparent hover:border-border"
+                    }`}
+                  >
+                    <img src={src} alt={`${product.name} ${i + 1}`} className="w-full h-full object-contain" />
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 

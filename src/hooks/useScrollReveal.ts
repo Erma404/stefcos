@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export const useScrollReveal = () => {
+export const useScrollReveal = (key?: unknown) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -8,6 +8,7 @@ export const useScrollReveal = () => {
     if (!el) return;
 
     const children = el.querySelectorAll("[data-reveal]");
+    children.forEach((child) => child.classList.remove("revealed"));
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -27,7 +28,8 @@ export const useScrollReveal = () => {
     children.forEach((child) => observer.observe(child));
 
     return () => observer.disconnect();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   return ref;
 };

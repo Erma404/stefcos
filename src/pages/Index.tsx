@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Truck, Award, Headphones, Gift, Star, MessageCircle, CreditCard, Shield, Phone } from "lucide-react";
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
+import ArticleIllustration from "@/components/ArticleIllustration";
 import { products } from "@/data/products";
 import { articles } from "@/data/articles";
 import { testimonials } from "@/data/testimonials";
@@ -9,7 +10,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { buildWhatsAppGenericUrl, buildWhatsAppConseilUrl } from "@/lib/whatsapp";
 import heroBanner from "@/assets/hero-banner.jpg";
 import philosophyImg from "@/assets/philosophy.jpg";
-import beforeAfterImg from "@/assets/before-after.jpeg";
+import conseilsImg from "@/assets/conseils-stefcos.jpeg";
 
 const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
@@ -20,7 +21,7 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 const Index = () => {
   const revealRef = useScrollReveal();
   const bestsellers = products.filter((p) => p.badge === "Bestseller" || p.badge === "Premium").slice(0, 4);
-  const newArrivals = products.filter((p) => p.badge === "Nouveau").concat(products.slice(0, 3));
+  const newArrivals = products.filter((p) => p.badge === "Nouveau" || p.badge === "Nouveauté").concat(products.slice(0, 2));
   const latestArticles = articles.slice(0, 3);
 
   return (
@@ -127,6 +128,61 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Gamme Enfants Spotlight */}
+        <section className="bg-[#fdf6ee]">
+          <div className="container mx-auto px-6 lg:px-12 py-20 md:py-28">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="relative overflow-hidden rounded-sm img-zoom" data-reveal="left">
+                <div className="grid grid-cols-2 gap-3">
+                  {[1, 2, 3, 4].map((n) => (
+                    <div key={n} className="aspect-square bg-secondary overflow-hidden rounded-sm">
+                      <img
+                        src={`/products/glycederm-kid/${n}.png`}
+                        alt={`Glycederm Enfant ${n}`}
+                        className="w-full h-full object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div data-reveal="right">
+                <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-accent font-semibold mb-3">
+                  Nouveauté · Gamme Enfants
+                </p>
+                <h2 className="font-serif text-3xl md:text-5xl font-light leading-tight mb-6">
+                  Douceur & Soin<br />
+                  <span className="italic">pour les Tout-Petits</span>
+                </h2>
+                <p className="font-sans text-sm leading-relaxed text-muted-foreground mb-4">
+                  La gamme Glycederm Enfant est formulée spécifiquement pour les peaux délicates des enfants. Sans agressivité, sans compromis sur la qualité.
+                </p>
+                <ul className="font-sans text-sm text-muted-foreground space-y-2 mb-8">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
+                    Formule ultra-douce, testée dermatologiquement
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
+                    Hydratation longue durée pour peaux sensibles
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
+                    Sans parabènes · Sans colorants artificiels
+                  </li>
+                </ul>
+                <Link
+                  to="/boutique/glycederm-kid"
+                  className="group inline-flex items-center gap-3 bg-accent text-accent-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-accent/90 hover:gap-5 transition-all duration-300"
+                >
+                  Découvrir la gamme
+                  <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Testimonials */}
         <section className="bg-secondary">
           <div className="container mx-auto px-6 lg:px-12 py-20 md:py-28">
@@ -175,8 +231,8 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative aspect-square overflow-hidden rounded-sm img-zoom" data-reveal="left">
               <img
-                src={beforeAfterImg}
-                alt="Résultats visibles avec les soins STEFCOS"
+                src={conseilsImg}
+                alt="Conseils STEFCOS"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -281,34 +337,38 @@ const Index = () => {
             </p>
             <h2 className="font-serif text-3xl md:text-5xl font-light">Par Catégorie</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { name: "Soins Corps", count: 4, img: products[0].image },
-              { name: "Traitements", count: 3, img: products[2].image },
-              { name: "Savons", count: 2, img: products[5].image },
-            ].map((cat, i) => (
-              <Link
-                key={cat.name}
-                to="/boutique"
-                className="group relative aspect-[3/4] overflow-hidden bg-secondary img-zoom hover-glow"
-                data-reveal
-                data-reveal-delay={i * 120}
-              >
-                <img
-                  src={cat.img}
-                  alt={cat.name}
-                  loading="lazy"
-                  width={800}
-                  height={800}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent transition-opacity duration-500 group-hover:from-foreground/70" />
-                <div className="absolute bottom-8 left-8 transition-transform duration-500 group-hover:translate-y-[-4px]">
-                  <h3 className="font-serif text-2xl text-primary-foreground mb-1">{cat.name}</h3>
-                  <p className="font-sans text-xs text-primary-foreground/70">{cat.count} produits</p>
-                </div>
-              </Link>
-            ))}
+              { name: "Soins Corps", img: "/products/sublim-eclat/1.png" },
+              { name: "Traitements", img: "/products/bio-activ/1.png" },
+              { name: "Savons", img: "/products/glycederm/1.png" },
+              { name: "Enfants", img: "/products/glycederm-kid/1.png" },
+            ].map((cat, i) => {
+              const count = products.filter((p) => p.category === cat.name).length;
+              return (
+                <Link
+                  key={cat.name}
+                  to="/boutique"
+                  className="group relative aspect-[3/4] overflow-hidden bg-secondary img-zoom hover-glow"
+                  data-reveal
+                  data-reveal-delay={i * 100}
+                >
+                  <img
+                    src={cat.img}
+                    alt={cat.name}
+                    loading="lazy"
+                    width={800}
+                    height={800}
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent transition-opacity duration-500 group-hover:from-foreground/80" />
+                  <div className="absolute bottom-6 left-6 transition-transform duration-500 group-hover:translate-y-[-4px]">
+                    <h3 className="font-serif text-xl text-primary-foreground mb-1">{cat.name}</h3>
+                    <p className="font-sans text-xs text-primary-foreground/70">{count} produit{count > 1 ? "s" : ""}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
@@ -386,14 +446,10 @@ const Index = () => {
                 data-reveal
                 data-reveal-delay={i * 120}
               >
-                <div className="aspect-[3/2] overflow-hidden bg-secondary mb-5 img-zoom hover-glow">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    loading="lazy"
-                    width={800}
-                    height={533}
-                    className="w-full h-full object-cover"
+                <div className="aspect-[3/2] overflow-hidden bg-secondary mb-5 rounded-sm">
+                  <ArticleIllustration
+                    illustrationKey={article.illustrationKey}
+                    className="w-full h-full transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex items-center gap-4 mb-3">

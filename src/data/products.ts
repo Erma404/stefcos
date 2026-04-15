@@ -1,18 +1,10 @@
-import product72heures from "@/assets/product-72heures.jpg";
-import productSublimEclat from "@/assets/product-sublim-eclat.jpg";
-import productBioActiv from "@/assets/product-bio-activ.jpg";
-import productSidoClair from "@/assets/product-sido-clair.jpg";
-import productVeryWhite from "@/assets/product-very-white.jpg";
-import productSavon from "@/assets/product-savon.jpg";
-import productBovena from "@/assets/product-bovena.jpg";
-import productGlycederm from "@/assets/product-glycederm.jpg";
-
 export interface Product {
   id: string;
   name: string;
   subtitle: string;
   price: number;
   image: string;
+  gallery?: string[];
   category: string;
   badge?: string;
   description: string;
@@ -24,7 +16,8 @@ export const products: Product[] = [
     name: "72 Heures",
     subtitle: "Lait Éclaircissant",
     price: 4500,
-    image: product72heures,
+    image: "/products/lait-72h/2.png",
+    gallery: ["/products/lait-72h/2.png", "/products/lait-72h/1.png", "/products/lait-72h/3.png", "/products/lait-72h/4.png"],
     category: "Soins Corps",
     badge: "Bestseller",
     description: "Lait de beauté éclaircissant aux acides de fruits pour un teint lumineux et uniforme.",
@@ -34,7 +27,8 @@ export const products: Product[] = [
     name: "Sublim Éclat",
     subtitle: "Lotion à l'Huile de Carotte",
     price: 3800,
-    image: productSublimEclat,
+    image: "/products/sublim-eclat/1.png",
+    gallery: ["/products/sublim-eclat/1.png", "/products/sublim-eclat/2.png", "/products/sublim-eclat/3.png", "/products/sublim-eclat/4.png"],
     category: "Soins Corps",
     description: "Lotion corporelle enrichie à l'huile de carotte pour une peau éclatante et nourrie.",
   },
@@ -43,7 +37,8 @@ export const products: Product[] = [
     name: "Bio Activ",
     subtitle: "Traitement Anti-taches",
     price: 5200,
-    image: productBioActiv,
+    image: "/products/bio-activ/1.png",
+    gallery: ["/products/bio-activ/1.png", "/products/bio-activ/2.png", "/products/bio-activ/3.png", "/products/bio-activ/4.png"],
     category: "Traitements",
     badge: "Nouveau",
     description: "Spray traitant concentré en actifs naturels pour corriger les imperfections cutanées.",
@@ -53,47 +48,52 @@ export const products: Product[] = [
     name: "Sido Clair",
     subtitle: "Lait Éclaircissant à l'Avocat",
     price: 4200,
-    image: productSidoClair,
+    image: "/products/sido-clair/3.png",
+    gallery: ["/products/sido-clair/3.png", "/products/sido-clair/1.png", "/products/sido-clair/2.png", "/products/sido-clair/4.png"],
     category: "Soins Corps",
     description: "Lait éclaircissant doux à l'avocat pour une peau douce et un teint harmonieux.",
-  },
-  {
-    id: "very-white",
-    name: "Very White Prestige",
-    subtitle: "Soin à la Grenade",
-    price: 5800,
-    image: productVeryWhite,
-    category: "Traitements",
-    badge: "Premium",
-    description: "Soin prestige à l'extrait de grenade pour une peau radieuse et protégée.",
   },
   {
     id: "savon-gommant",
     name: "Savon Gommant",
     subtitle: "Exfoliant & Clarifiant",
     price: 1500,
-    image: productSavon,
+    image: "/products/gommage-72h/2.png",
+    gallery: ["/products/gommage-72h/2.png", "/products/gommage-72h/1.png", "/products/gommage-72h/3.png", "/products/gommage-72h/4.png"],
     category: "Savons",
     description: "Savon gommant exfoliant pour éliminer les cellules mortes et révéler l'éclat naturel.",
   },
   {
-    id: "bovena",
-    name: "Bovena",
-    subtitle: "Spray Soin Cutané",
-    price: 3500,
-    image: productBovena,
-    category: "Traitements",
-    description: "Spray traitant multifonction pour le soin quotidien de la peau.",
+    id: "savon-eclaircissant-72h",
+    name: "Savon Éclaircissant 72H",
+    subtitle: "Savon AHA Au Végéwhite",
+    price: 1500,
+    image: "/products/savon-72h/2.png",
+    gallery: ["/products/savon-72h/2.png", "/products/savon-72h/1.png", "/products/savon-72h/3.png", "/products/savon-72h/4.png"],
+    category: "Savons",
+    description: "Savon éclaircissant aux acides de fruits AHA et extrait de Végéwhite. Usage visage & corps pour un teint unifié en 72 heures.",
   },
   {
     id: "glycederm",
     name: "Glycederm",
     subtitle: "Savon Glycériné",
     price: 2000,
-    image: productGlycederm,
+    image: "/products/glycederm/1.png",
+    gallery: ["/products/glycederm/1.png", "/products/glycederm/2.png", "/products/glycederm/3.png"],
     category: "Savons",
     description: "Savon à la glycérine pure pour un nettoyage doux et une hydratation optimale.",
   },
+  {
+    id: "glycederm-kid",
+    name: "Glycederm Enfant",
+    subtitle: "Gamme Douceur pour Enfants",
+    price: 2500,
+    image: "/products/glycederm-kid/1.png",
+    gallery: ["/products/glycederm-kid/1.png", "/products/glycederm-kid/2.png", "/products/glycederm-kid/3.png", "/products/glycederm-kid/4.png"],
+    category: "Enfants",
+    badge: "Nouveauté",
+    description: "Gamme spécialement formulée pour les peaux délicates des enfants. Douceur et hydratation sans compromis.",
+  },
 ];
 
-export const categories = ["Tous", "Soins Corps", "Traitements", "Savons"];
+export const categories = ["Tous", "Soins Corps", "Traitements", "Savons", "Enfants"];
