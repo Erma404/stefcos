@@ -15,6 +15,9 @@ interface CartContextType {
   updateQuantity: (productId: string, quantity: number) => void;
   totalItems: number;
   totalPrice: number;
+  originalPrice: number;
+  totalDiscount: number;
+  getItemDiscount: (quantity: number) => number;
 }
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -23,6 +26,12 @@ export const useCart = () => {
   const ctx = useContext(CartContext);
   if (!ctx) throw new Error("useCart must be used within CartProvider");
   return ctx;
+};
+
+export const getItemDiscount = (quantity: number): number => {
+  if (quantity >= 3) return 0.10;
+  if (quantity >= 2) return 0.05;
+  return 0;
 };
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
@@ -57,11 +66,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
-  const totalPrice = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  const originalPrice = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  const totalPrice = items.reduce((sum, i) => {
+    const discount = getItemDiscount(i.quantity);
+    return sum + i.product.price * i.quantity * (1 - discount);
+  }, 0);
+  const totalDiscount = originalPrice - totalPrice;
 
   return (
     <CartContext.Provider
-      value={{ items, isOpen, setIsOpen, addItem, removeItem, updateQuantity, totalItems, totalPrice }}
+      value={{ items, isOpen, setIsOpen, addItem, removeItem, updateQuantity, totalItems, totalPrice, originalPrice, totalDiscount, getItemDiscount }}
     >
       {children}
     </CartContext.Provider>

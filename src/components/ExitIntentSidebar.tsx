@@ -60,7 +60,7 @@ const ExitIntentSidebar = () => {
         {/* Header image */}
         <div className="relative h-48 overflow-hidden bg-secondary">
           <img
-            src={recommended[0].image}
+            src="/products/lait-72h/4.png"
             alt="STEFCOS"
             className="w-full h-full object-cover"
           />

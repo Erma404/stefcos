@@ -1,7 +1,8 @@
-import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import { useCart } from "@/contexts/CartContext";
+import { X, Minus, Plus, Trash2, ShoppingBag, Tag } from "lucide-react";
+import { useCart, getItemDiscount } from "@/contexts/CartContext";
 import { Link } from "react-router-dom";
 import { buildWhatsAppCartUrl, formatPrice } from "@/lib/whatsapp";
+import { products } from "@/data/products";
 
 const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
@@ -10,7 +11,10 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 );
 
 const CartDrawer = () => {
-  const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalItems, totalPrice } = useCart();
+  const { items, isOpen, setIsOpen, addItem, removeItem, updateQuantity, totalItems, totalPrice, originalPrice, totalDiscount } = useCart();
+
+  const cartProductIds = new Set(items.map((i) => i.product.id));
+  const crossSell = products.filter((p) => !cartProductIds.has(p.id)).slice(0, 2);
 
   if (!isOpen) return null;
 
@@ -18,6 +22,7 @@ const CartDrawer = () => {
     <>
       <div className="fixed inset-0 bg-foreground/40 backdrop-blur-sm z-50" onClick={() => setIsOpen(false)} />
       <div className="fixed top-0 right-0 h-full w-full max-w-md bg-background z-50 shadow-2xl animate-slide-in flex flex-col">
+
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-border">
           <div className="flex items-center gap-3">
@@ -28,6 +33,17 @@ const CartDrawer = () => {
             <X size={20} />
           </button>
         </div>
+
+        {/* Promo reminder */}
+        {items.length > 0 && (
+          <div className="bg-accent/10 border-b border-accent/20 px-6 py-2.5 flex items-center gap-2">
+            <Tag size={13} className="text-accent flex-shrink-0" />
+            <p className="font-sans text-[10px] text-foreground leading-snug">
+              <span className="font-semibold">−5%</span> dès 2 exemplaires ·{" "}
+              <span className="font-semibold">−10%</span> dès 3 exemplaires d'un même produit
+            </p>
+          </div>
+        )}
 
         {/* Items */}
         <div className="flex-1 overflow-y-auto px-6 py-4">
@@ -48,54 +64,136 @@ const CartDrawer = () => {
             </div>
           ) : (
             <div className="space-y-5">
-              {items.map(({ product, quantity }) => (
-                <div key={product.id} className="flex gap-4">
-                  <Link
-                    to={`/boutique/${product.id}`}
-                    onClick={() => setIsOpen(false)}
-                    className="w-20 h-20 flex-shrink-0 bg-secondary rounded-sm overflow-hidden"
-                  >
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                  </Link>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-serif text-sm font-medium truncate">{product.name}</h4>
-                    <p className="font-sans text-[10px] text-muted-foreground uppercase tracking-wider">
-                      {product.subtitle}
-                    </p>
-                    <p className="font-sans text-sm font-semibold mt-1">{formatPrice(product.price)}</p>
-                    <div className="flex items-center gap-3 mt-2">
-                      <button
-                        onClick={() => updateQuantity(product.id, quantity - 1)}
-                        className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:bg-secondary transition-colors"
+              {items.map(({ product, quantity }) => {
+                const discountRate = getItemDiscount(quantity);
+                const lineOriginal = product.price * quantity;
+                const lineDiscounted = lineOriginal * (1 - discountRate);
+                const nextThreshold = quantity === 1 ? 2 : quantity === 2 ? 3 : null;
+                const nextDiscount = nextThreshold === 2 ? 5 : nextThreshold === 3 ? 10 : null;
+
+                return (
+                  <div key={product.id} className="space-y-2">
+                    <div className="flex gap-4">
+                      <Link
+                        to={`/boutique/${product.id}`}
+                        onClick={() => setIsOpen(false)}
+                        className="w-20 h-20 flex-shrink-0 bg-secondary rounded-sm overflow-hidden"
                       >
-                        <Minus size={12} />
-                      </button>
-                      <span className="font-sans text-sm font-medium w-5 text-center">{quantity}</span>
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </Link>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <h4 className="font-serif text-sm font-medium truncate">{product.name}</h4>
+                          {discountRate > 0 && (
+                            <span className="flex-shrink-0 bg-accent text-accent-foreground font-sans text-[9px] font-bold px-1.5 py-0.5 rounded-sm">
+                              -{discountRate * 100}%
+                            </span>
+                          )}
+                        </div>
+                        <p className="font-sans text-[10px] text-muted-foreground uppercase tracking-wider">
+                          {product.subtitle}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="font-sans text-sm font-semibold">{formatPrice(lineDiscounted)}</p>
+                          {discountRate > 0 && (
+                            <p className="font-sans text-xs text-muted-foreground line-through">{formatPrice(lineOriginal)}</p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3 mt-2">
+                          <button
+                            onClick={() => updateQuantity(product.id, quantity - 1)}
+                            className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:bg-secondary transition-colors"
+                          >
+                            <Minus size={12} />
+                          </button>
+                          <span className="font-sans text-sm font-medium w-5 text-center">{quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(product.id, quantity + 1)}
+                            className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:bg-secondary transition-colors"
+                          >
+                            <Plus size={12} />
+                          </button>
+                          <button
+                            onClick={() => removeItem(product.id)}
+                            className="ml-auto p-1 text-muted-foreground hover:text-destructive transition-colors"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Nudge vers la prochaine remise */}
+                    {nextThreshold && nextDiscount && (
                       <button
                         onClick={() => updateQuantity(product.id, quantity + 1)}
-                        className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:bg-secondary transition-colors"
+                        className="w-full text-left bg-accent/10 border border-accent/30 rounded-sm px-3 py-1.5 font-sans text-[10px] text-accent font-semibold hover:bg-accent/20 transition-colors"
                       >
-                        <Plus size={12} />
+                        ✦ Ajoutez 1 exemplaire de plus → économisez {nextDiscount}% sur cet article
                       </button>
-                      <button
-                        onClick={() => removeItem(product.id)}
-                        className="ml-auto p-1 text-muted-foreground hover:text-destructive transition-colors"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              {/* Cross-sell */}
+              {crossSell.length > 0 && (
+                <div className="pt-4 border-t border-border">
+                  <p className="font-sans text-[10px] tracking-widest uppercase text-muted-foreground mb-3">
+                    Vous aimerez aussi
+                  </p>
+                  <div className="space-y-3">
+                    {crossSell.map((product) => (
+                      <div key={product.id} className="flex gap-3 items-center">
+                        <Link
+                          to={`/boutique/${product.id}`}
+                          onClick={() => setIsOpen(false)}
+                          className="w-14 h-14 flex-shrink-0 bg-secondary rounded-sm overflow-hidden"
+                        >
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </Link>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-serif text-sm font-medium truncate">{product.name}</p>
+                          <p className="font-sans text-xs text-muted-foreground">{formatPrice(product.price)}</p>
+                        </div>
+                        <button
+                          onClick={() => addItem(product)}
+                          className="flex-shrink-0 font-sans text-[10px] font-semibold tracking-widest uppercase border border-border px-2.5 py-1.5 rounded-sm hover:border-accent hover:text-accent transition-colors whitespace-nowrap"
+                        >
+                          + Ajouter
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           )}
         </div>
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-border px-6 py-5 space-y-4">
+          <div className="border-t border-border px-6 py-5 space-y-3">
+            {totalDiscount > 0 && (
+              <div className="flex justify-between items-center text-accent">
+                <span className="font-sans text-xs font-semibold">Vous économisez</span>
+                <span className="font-sans text-sm font-bold">−{formatPrice(totalDiscount)}</span>
+              </div>
+            )}
             <div className="flex justify-between items-center">
-              <span className="font-sans text-sm text-muted-foreground">Sous-total</span>
+              <span className="font-sans text-sm text-muted-foreground">
+                Total
+                {totalDiscount > 0 && (
+                  <span className="line-through ml-2 text-xs">{formatPrice(originalPrice)}</span>
+                )}
+              </span>
               <span className="font-serif text-xl font-semibold">{formatPrice(totalPrice)}</span>
             </div>
             <a

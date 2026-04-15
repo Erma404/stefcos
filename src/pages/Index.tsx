@@ -20,7 +20,7 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 
 const Index = () => {
   const revealRef = useScrollReveal();
-  const bestsellers = products.filter((p) => p.badge === "Bestseller" || p.badge === "Premium").slice(0, 4);
+  const bestsellers = products.filter((p) => p.badge === "Bestseller").slice(0, 4);
   const newArrivals = products.filter((p) => p.badge === "Nouveau" || p.badge === "Nouveauté").concat(products.slice(0, 2));
   const latestArticles = articles.slice(0, 3);
 
@@ -113,7 +113,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {bestsellers.map((product, i) => (
               <div key={product.id} data-reveal data-reveal-delay={i * 100}>
-                <ProductCard product={product} />
+                <ProductCard product={product} modelImage />
               </div>
             ))}
           </div>
@@ -339,10 +339,10 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { name: "Soins Corps", img: "/products/sublim-eclat/1.png" },
-              { name: "Traitements", img: "/products/bio-activ/1.png" },
-              { name: "Savons", img: "/products/glycederm/1.png" },
-              { name: "Enfants", img: "/products/glycederm-kid/1.png" },
+              { name: "Soins Corps", img: "/products/sido-clair/1.png" },
+              { name: "Traitements", img: "/products/bio-activ/4.png" },
+              { name: "Savons", img: "/products/glycederm/3.png" },
+              { name: "Enfants", img: "/products/glycederm-kid/4.png" },
             ].map((cat, i) => {
               const count = products.filter((p) => p.category === cat.name).length;
               return (
@@ -359,7 +359,7 @@ const Index = () => {
                     loading="lazy"
                     width={800}
                     height={800}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent transition-opacity duration-500 group-hover:from-foreground/80" />
                   <div className="absolute bottom-6 left-6 transition-transform duration-500 group-hover:translate-y-[-4px]">
@@ -410,24 +410,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* New Arrivals */}
-        <section>
-          <div className="container mx-auto px-6 lg:px-12 py-20 md:py-28">
-            <div className="text-center mb-14" data-reveal>
-              <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
-                Dernières Nouveautés
-              </p>
-              <h2 className="font-serif text-3xl md:text-5xl font-light">Nouveautés</h2>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              {newArrivals.slice(0, 4).map((product, i) => (
-                <div key={product.id} data-reveal data-reveal-delay={i * 100}>
-                  <ProductCard product={product} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Journal / Blog Section */}
         <section className="container mx-auto px-6 lg:px-12 py-20 md:py-28">

@@ -4,6 +4,7 @@ export interface Product {
   subtitle: string;
   price: number;
   image: string;
+  cardImage?: string;
   gallery?: string[];
   category: string;
   badge?: string;
@@ -17,6 +18,7 @@ export const products: Product[] = [
     subtitle: "Lait Éclaircissant",
     price: 4500,
     image: "/products/lait-72h/2.png",
+    cardImage: "/products/lait-72h/3.png",
     gallery: ["/products/lait-72h/2.png", "/products/lait-72h/1.png", "/products/lait-72h/3.png", "/products/lait-72h/4.png"],
     category: "Soins Corps",
     badge: "Bestseller",
@@ -28,6 +30,7 @@ export const products: Product[] = [
     subtitle: "Lotion à l'Huile de Carotte",
     price: 3800,
     image: "/products/sublim-eclat/1.png",
+    cardImage: "/products/sublim-eclat/3.png",
     gallery: ["/products/sublim-eclat/1.png", "/products/sublim-eclat/2.png", "/products/sublim-eclat/3.png", "/products/sublim-eclat/4.png"],
     category: "Soins Corps",
     description: "Lotion corporelle enrichie à l'huile de carotte pour une peau éclatante et nourrie.",
@@ -38,6 +41,7 @@ export const products: Product[] = [
     subtitle: "Traitement Anti-taches",
     price: 5200,
     image: "/products/bio-activ/1.png",
+    cardImage: "/products/bio-activ/4.png",
     gallery: ["/products/bio-activ/1.png", "/products/bio-activ/2.png", "/products/bio-activ/3.png", "/products/bio-activ/4.png"],
     category: "Traitements",
     badge: "Nouveau",
@@ -49,6 +53,7 @@ export const products: Product[] = [
     subtitle: "Lait Éclaircissant à l'Avocat",
     price: 4200,
     image: "/products/sido-clair/3.png",
+    cardImage: "/products/sido-clair/1.png",
     gallery: ["/products/sido-clair/3.png", "/products/sido-clair/1.png", "/products/sido-clair/2.png", "/products/sido-clair/4.png"],
     category: "Soins Corps",
     description: "Lait éclaircissant doux à l'avocat pour une peau douce et un teint harmonieux.",
@@ -59,6 +64,7 @@ export const products: Product[] = [
     subtitle: "Exfoliant & Clarifiant",
     price: 1500,
     image: "/products/gommage-72h/2.png",
+    cardImage: "/products/gommage-72h/3.png",
     gallery: ["/products/gommage-72h/2.png", "/products/gommage-72h/1.png", "/products/gommage-72h/3.png", "/products/gommage-72h/4.png"],
     category: "Savons",
     description: "Savon gommant exfoliant pour éliminer les cellules mortes et révéler l'éclat naturel.",
@@ -69,8 +75,10 @@ export const products: Product[] = [
     subtitle: "Savon AHA Au Végéwhite",
     price: 1500,
     image: "/products/savon-72h/2.png",
+    cardImage: "/products/savon-72h/4.png",
     gallery: ["/products/savon-72h/2.png", "/products/savon-72h/1.png", "/products/savon-72h/3.png", "/products/savon-72h/4.png"],
     category: "Savons",
+    badge: "Bestseller",
     description: "Savon éclaircissant aux acides de fruits AHA et extrait de Végéwhite. Usage visage & corps pour un teint unifié en 72 heures.",
   },
   {
@@ -79,6 +87,7 @@ export const products: Product[] = [
     subtitle: "Savon Glycériné",
     price: 2000,
     image: "/products/glycederm/1.png",
+    cardImage: "/products/glycederm/3.png",
     gallery: ["/products/glycederm/1.png", "/products/glycederm/2.png", "/products/glycederm/3.png"],
     category: "Savons",
     description: "Savon à la glycérine pure pour un nettoyage doux et une hydratation optimale.",
@@ -89,6 +98,7 @@ export const products: Product[] = [
     subtitle: "Gamme Douceur pour Enfants",
     price: 2500,
     image: "/products/glycederm-kid/1.png",
+    cardImage: "/products/glycederm-kid/4.png",
     gallery: ["/products/glycederm-kid/1.png", "/products/glycederm-kid/2.png", "/products/glycederm-kid/3.png", "/products/glycederm-kid/4.png"],
     category: "Enfants",
     badge: "Nouveauté",

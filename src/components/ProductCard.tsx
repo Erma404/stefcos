@@ -5,7 +5,7 @@ import type { Product } from "@/data/products";
 import { formatPrice } from "@/lib/whatsapp";
 import { useCart } from "@/contexts/CartContext";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product, modelImage = false }: { product: Product; modelImage?: boolean }) => {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -23,7 +23,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className="hover-lift hover-shine">
           <div className="relative aspect-square overflow-hidden bg-secondary rounded-sm img-zoom">
             <img
-              src={product.image}
+              src={modelImage && product.cardImage ? product.cardImage : product.image}
               alt={product.name}
               loading="lazy"
               width={800}
