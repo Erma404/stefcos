@@ -1,4 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import Layout from "@/components/Layout";
 import { ArrowLeft, Clock, Calendar, ArrowRight, Share2 } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -8,6 +9,24 @@ const ArticleDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const revealRef = useScrollReveal();
   const article = articles.find((a) => a.slug === slug);
+
+  useEffect(() => {
+    if (!article) return;
+    document.title = `${article.title} — STEFCOS Journal`;
+    const setMeta = (name: string, content: string, prop = false) => {
+      const attr = prop ? "property" : "name";
+      let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement;
+      if (!el) { el = document.createElement("meta"); el.setAttribute(attr, name); document.head.appendChild(el); }
+      el.setAttribute("content", content);
+    };
+    setMeta("description", article.excerpt);
+    setMeta("og:title", `${article.title} — STEFCOS`, true);
+    setMeta("og:description", article.excerpt, true);
+    setMeta("og:url", `https://www.stefcos.com/journal/${article.slug}`, true);
+    setMeta("og:image", article.image, true);
+    setMeta("og:type", "article", true);
+    return () => { document.title = "STEFCOS - Cosmétiques Premium Peaux Noires & Mixtes | Lomé, Togo"; };
+  }, [article]);
 
   if (!article) return <Navigate to="/journal" replace />;
 
