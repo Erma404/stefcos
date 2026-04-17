@@ -15,14 +15,14 @@ export const buildWhatsAppProductUrl = (product: Product, quantity = 1, prenom =
   const total = product.price * quantity;
   const orderId = generateOrderId();
   const message =
-    `Bonjour STEFCOS 👋, je souhaite passer une commande.\n\n` +
-    `🛒 *Commande N° ${orderId}*\n` +
-    `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(total)}\n` +
-    `💰 *Total : ${formatPrice(total)}*\n\n` +
-    `📋 *Mes informations :*\n` +
-    `• Prénom : ${prenom}\n` +
-    `• Quartier / Zone : ${zone}\n` +
-    `• Paiement : ${paiement}\n\n` +
+    `Bonjour STEFCOS, je souhaite passer une commande.\n\n` +
+    `*Commande N° ${orderId}*\n` +
+    `- ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(total)}\n` +
+    `*Total : ${formatPrice(total)}*\n\n` +
+    `*Mes informations :*\n` +
+    `- Prénom : ${prenom}\n` +
+    `- Quartier / Zone : ${zone}\n` +
+    `- Paiement : ${paiement}\n\n` +
     `Merci de confirmer ma commande !`;
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
@@ -35,17 +35,17 @@ export const buildWhatsAppConseilUrl = () => {
 export const buildWhatsAppCartUrl = (items: { product: Product; quantity: number }[], totalPrice: number, prenom = "", zone = "", paiement = "") => {
   const orderId = generateOrderId();
   let message =
-    `Bonjour STEFCOS 👋, je souhaite passer une commande.\n\n` +
-    `🛒 *Commande N° ${orderId}*\n`;
+    `Bonjour STEFCOS, je souhaite passer une commande.\n\n` +
+    `*Commande N° ${orderId}*\n`;
   items.forEach(({ product, quantity }) => {
-    message += `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(product.price * quantity)}\n`;
+    message += `- ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(product.price * quantity)}\n`;
   });
   message +=
-    `💰 *Total : ${formatPrice(totalPrice)}*\n\n` +
-    `📋 *Mes informations :*\n` +
-    `• Prénom : ${prenom}\n` +
-    `• Quartier / Zone : ${zone}\n` +
-    `• Paiement : ${paiement}\n\n` +
+    `*Total : ${formatPrice(totalPrice)}*\n\n` +
+    `*Mes informations :*\n` +
+    `- Prénom : ${prenom}\n` +
+    `- Quartier / Zone : ${zone}\n` +
+    `- Paiement : ${paiement}\n\n` +
     `Merci de confirmer ma commande !`;
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
