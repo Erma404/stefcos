@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { X, Minus, Plus, Trash2, ShoppingBag, Tag } from "lucide-react";
 import { useCart, getItemDiscount } from "@/contexts/CartContext";
 import { Link } from "react-router-dom";
 import { buildWhatsAppCartUrl, formatPrice } from "@/lib/whatsapp";
 import { products } from "@/data/products";
+import OrderModal from "@/components/OrderModal";
 
 const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
@@ -13,6 +15,7 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 const CartDrawer = () => {
   const { items, isOpen, setIsOpen, addItem, removeItem, updateQuantity, totalItems, totalPrice, originalPrice, totalDiscount } = useCart();
 
+  const [showOrderModal, setShowOrderModal] = useState(false);
   const cartProductIds = new Set(items.map((i) => i.product.id));
   const crossSell = products.filter((p) => !cartProductIds.has(p.id)).slice(0, 2);
 
@@ -196,15 +199,21 @@ const CartDrawer = () => {
               </span>
               <span className="font-serif text-xl font-semibold">{formatPrice(totalPrice)}</span>
             </div>
-            <a
-              href={buildWhatsAppCartUrl(items, totalPrice)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setShowOrderModal(true)}
               className="w-full flex items-center justify-center gap-3 bg-[#25D366] text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase py-4 hover:bg-[#1da851] transition-colors"
             >
               <WhatsAppIcon className="w-5 h-5" />
               Commander via WhatsApp
-            </a>
+            </button>
+            {showOrderModal && (
+              <OrderModal
+                items={items}
+                totalPrice={totalPrice}
+                onClose={() => setShowOrderModal(false)}
+                buildUrl={(prenom, zone, paiement) => buildWhatsAppCartUrl(items, totalPrice, prenom, zone, paiement)}
+              />
+            )}
             <p className="font-sans text-[10px] text-muted-foreground text-center">
               💳 Paiement à la livraison • 📱 Mobile Money accepté
             </p>

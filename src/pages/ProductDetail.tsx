@@ -6,6 +6,7 @@ import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { buildWhatsAppProductUrl, buildWhatsAppConseilUrl, formatPrice } from "@/lib/whatsapp";
+import OrderModal from "@/components/OrderModal";
 
 const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
@@ -18,6 +19,7 @@ const ProductDetail = () => {
   const product = products.find((p) => p.id === id);
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [showOrderModal, setShowOrderModal] = useState(false);
   const images = product?.gallery?.length ? product.gallery : product ? [product.image] : [];
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -137,15 +139,21 @@ const ProductDetail = () => {
             </div>
 
             {/* WhatsApp Direct Order */}
-            <a
-              href={buildWhatsAppProductUrl(product, quantity)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setShowOrderModal(true)}
               className="w-full flex items-center justify-center gap-3 bg-[#25D366] text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase h-12 px-6 hover:bg-[#1da851] transition-colors mb-4"
             >
               <WhatsAppIcon className="w-4 h-4" />
               Commander sur WhatsApp
-            </a>
+            </button>
+            {showOrderModal && (
+              <OrderModal
+                items={[{ product, quantity }]}
+                totalPrice={product.price * quantity}
+                onClose={() => setShowOrderModal(false)}
+                buildUrl={(prenom, zone, paiement) => buildWhatsAppProductUrl(product, quantity, prenom, zone, paiement)}
+              />
+            )}
 
             {/* Conseil */}
             <a

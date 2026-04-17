@@ -11,7 +11,7 @@ const generateOrderId = () => {
   return `STC-${year}-${rand}`;
 };
 
-export const buildWhatsAppProductUrl = (product: Product, quantity = 1) => {
+export const buildWhatsAppProductUrl = (product: Product, quantity = 1, prenom = "", zone = "", paiement = "") => {
   const total = product.price * quantity;
   const orderId = generateOrderId();
   const message =
@@ -20,9 +20,9 @@ export const buildWhatsAppProductUrl = (product: Product, quantity = 1) => {
     `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(total)}\n` +
     `💰 *Total : ${formatPrice(total)}*\n\n` +
     `📋 *Mes informations :*\n` +
-    `• Prénom : \n` +
-    `• Quartier / Zone : \n` +
-    `• Paiement : avant livraison (TMoney) / à la livraison\n\n` +
+    `• Prénom : ${prenom}\n` +
+    `• Quartier / Zone : ${zone}\n` +
+    `• Paiement : ${paiement}\n\n` +
     `Merci de confirmer ma commande !`;
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
@@ -32,7 +32,7 @@ export const buildWhatsAppConseilUrl = () => {
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
 
-export const buildWhatsAppCartUrl = (items: { product: Product; quantity: number }[], totalPrice: number) => {
+export const buildWhatsAppCartUrl = (items: { product: Product; quantity: number }[], totalPrice: number, prenom = "", zone = "", paiement = "") => {
   const orderId = generateOrderId();
   let message =
     `Bonjour STEFCOS 👋, je souhaite passer une commande.\n\n` +
@@ -43,9 +43,9 @@ export const buildWhatsAppCartUrl = (items: { product: Product; quantity: number
   message +=
     `💰 *Total : ${formatPrice(totalPrice)}*\n\n` +
     `📋 *Mes informations :*\n` +
-    `• Prénom : \n` +
-    `• Quartier / Zone : \n` +
-    `• Paiement : avant livraison (TMoney) / à la livraison\n\n` +
+    `• Prénom : ${prenom}\n` +
+    `• Quartier / Zone : ${zone}\n` +
+    `• Paiement : ${paiement}\n\n` +
     `Merci de confirmer ma commande !`;
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
