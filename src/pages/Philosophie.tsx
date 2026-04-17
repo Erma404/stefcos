@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import philosophyImg from "@/assets/philosophy.jpg";
-import heroBanner from "@/assets/hero-banner.jpg";
+import philosophieHero from "@/assets/philosophie-hero.jpeg";
 import { Leaf, Heart, Shield, Sparkles, FlaskConical, Users, Globe, Award, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
@@ -108,7 +108,7 @@ const Philosophie = () => {
     <Layout>
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[400px] overflow-hidden">
-        <img src={heroBanner} alt="Cosmétiques peaux noires STEFCOS Togo — Notre philosophie" className="absolute inset-0 w-full h-full object-cover" width={1024} height={1024} />
+        <img src={philosophieHero} alt="Cosmétiques peaux noires STEFCOS Togo — Notre philosophie" className="absolute inset-0 w-full h-full object-cover object-top" width={1024} height={1024} />
         <div className="absolute inset-0 bg-foreground/55" />
         <div className="relative container mx-auto px-6 lg:px-12 h-full flex items-center justify-center text-center">
           <div className="animate-fade-up max-w-2xl">
