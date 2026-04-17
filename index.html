@@ -76,6 +76,15 @@
 
   <body>
     <div id="root"></div>
+    <script>
+      // GitHub Pages SPA redirect — restore path
+      (function() {
+        var p = window.location.search.match(/[?&]p=([^&]+)/);
+        if (p) {
+          window.history.replaceState(null, null, decodeURIComponent(p[1]));
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
