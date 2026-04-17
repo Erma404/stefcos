@@ -28,7 +28,7 @@ function setupSheetCommandes(ss) {
   const headers = [
     'ID Commande', 'Date', 'Nom Client', 'Téléphone',
     'Quartier / Zone', 'Produits', 'Montant (FCFA)',
-    'Paiement', 'Statut Commande', 'Coursier Assigné',
+    'Paiement', 'Mode Paiement', 'Statut Commande', 'Coursier Assigné',
     'Mode Commande', 'Priorité', 'Preuve Paiement', 'Commentaire'
   ];
 
@@ -44,16 +44,22 @@ function setupSheetCommandes(ss) {
   sheet.setRowHeight(1, 40);
 
   // Largeurs colonnes
-  const colWidths = [110, 100, 160, 130, 150, 200, 130, 120, 150, 150, 130, 100, 130, 200];
+  const colWidths = [110, 100, 160, 130, 150, 200, 130, 120, 160, 150, 150, 130, 100, 130, 200];
   colWidths.forEach((w, i) => sheet.setColumnWidth(i + 1, w));
 
-  // Validation : Paiement (col 8)
+  // Validation : Paiement statut (col 8)
   const paiementRule = SpreadsheetApp.newDataValidation()
     .requireValueInList(['Non payé', 'Payé', 'Partiel'], true)
     .setAllowInvalid(false).build();
   sheet.getRange(2, 8, 500).setDataValidation(paiementRule);
 
-  // Validation : Statut (col 9)
+  // Validation : Mode Paiement (col 9)
+  const modePaiementRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['Avant livraison (TMoney)', 'Avant livraison (Flooz)', 'À la livraison'], true)
+    .setAllowInvalid(false).build();
+  sheet.getRange(2, 9, 500).setDataValidation(modePaiementRule);
+
+  // Validation : Statut (col 10)
   const statutRule = SpreadsheetApp.newDataValidation()
     .requireValueInList([
       '🟡 Nouvelle commande',
@@ -64,27 +70,27 @@ function setupSheetCommandes(ss) {
       '🔴 Problème'
     ], true)
     .setAllowInvalid(false).build();
-  sheet.getRange(2, 9, 500).setDataValidation(statutRule);
+  sheet.getRange(2, 10, 500).setDataValidation(statutRule);
 
-  // Validation : Coursier (col 10)
+  // Validation : Coursier (col 11)
   const coursierRule = SpreadsheetApp.newDataValidation()
     .requireValueInRange(ss.getSheetByName('COURSIERS') ?
       ss.getSheetByName('COURSIERS').getRange('A2:A20') :
-      sheet.getRange('J2:J2'), true)
+      sheet.getRange('K2:K2'), true)
     .setAllowInvalid(true).build();
-  sheet.getRange(2, 10, 500).setDataValidation(coursierRule);
+  sheet.getRange(2, 11, 500).setDataValidation(coursierRule);
 
-  // Validation : Mode commande (col 11)
+  // Validation : Mode commande (col 12)
   const modeRule = SpreadsheetApp.newDataValidation()
     .requireValueInList(['WhatsApp', 'Appel', 'Instagram', 'Sur place'], true)
     .setAllowInvalid(false).build();
-  sheet.getRange(2, 11, 500).setDataValidation(modeRule);
+  sheet.getRange(2, 12, 500).setDataValidation(modeRule);
 
-  // Validation : Priorité (col 12)
+  // Validation : Priorité (col 13)
   const prioriteRule = SpreadsheetApp.newDataValidation()
     .requireValueInList(['Normale', 'Urgente', 'VIP'], true)
     .setAllowInvalid(false).build();
-  sheet.getRange(2, 12, 500).setDataValidation(prioriteRule);
+  sheet.getRange(2, 13, 500).setDataValidation(prioriteRule);
 
   // Mise en forme alternée
   sheet.getRange(2, 1, 500, headers.length).setBackground('#f8f9fa');
@@ -105,6 +111,7 @@ function setupSheetCommandes(ss) {
     'Glycéderm 500ml x2',
     12000,
     'Non payé',
+    'À la livraison',
     '🟡 Nouvelle commande',
     '',
     'WhatsApp',
@@ -288,10 +295,10 @@ function nouvelleCommande() {
 
   sheet.getRange(lastRow, 1).setValue(id);
   sheet.getRange(lastRow, 2).setValue(new Date()).setNumberFormat('dd/mm/yyyy');
-  sheet.getRange(lastRow, 9).setValue('🟡 Nouvelle commande');
-  sheet.getRange(lastRow, 11).setValue('WhatsApp');
-  sheet.getRange(lastRow, 12).setValue('Normale');
-  sheet.getRange(lastRow, 1, 1, 14).setBackground('#fff3cd');
+  sheet.getRange(lastRow, 10).setValue('🟡 Nouvelle commande');
+  sheet.getRange(lastRow, 12).setValue('WhatsApp');
+  sheet.getRange(lastRow, 13).setValue('Normale');
+  sheet.getRange(lastRow, 1, 1, 15).setBackground('#fff3cd');
 
   sheet.setActiveRange(sheet.getRange(lastRow, 3));
   SpreadsheetApp.getUi().alert(`✅ Ligne ${id} créée — Complétez le nom du client.`);
