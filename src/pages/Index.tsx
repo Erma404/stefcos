@@ -51,7 +51,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/boutique"
+                to="/philosophie"
                 className="group inline-flex items-center justify-center gap-3 bg-accent text-accent-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-accent/90 hover:gap-5 transition-all duration-300"
               >
                 Découvrir
