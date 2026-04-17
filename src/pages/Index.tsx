@@ -57,15 +57,12 @@ const Index = () => {
                 Découvrir
                 <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              <a
-                href={buildWhatsAppGenericUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-3 bg-[#25D366] text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-[#1da851] transition-all duration-300"
+              <Link
+                to="/boutique"
+                className="group inline-flex items-center justify-center gap-3 bg-accent text-accent-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-accent/90 transition-all duration-300"
               >
-                <WhatsAppIcon className="w-4 h-4" />
                 Commander
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -277,15 +274,12 @@ const Index = () => {
                   <MessageCircle size={16} />
                   Demander Conseil
                 </a>
-                <a
-                  href={buildWhatsAppGenericUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/boutique"
                   className="inline-flex items-center justify-center gap-3 border border-border font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-secondary transition-all duration-300"
                 >
-                  <WhatsAppIcon className="w-4 h-4" />
                   Commander
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -393,15 +387,12 @@ const Index = () => {
                 ))}
               </div>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a
-                  href={buildWhatsAppGenericUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 bg-[#25D366] text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-[#1da851] transition-all duration-300"
+                <Link
+                  to="/boutique"
+                  className="inline-flex items-center justify-center gap-3 bg-accent text-accent-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-accent/90 transition-all duration-300"
                 >
-                  <WhatsAppIcon className="w-4 h-4" />
                   Commander Maintenant
-                </a>
+                </Link>
               </div>
               <p className="font-sans text-[10px] text-muted-foreground mt-4">
                 💳 Paiement à la livraison • 📱 Mobile Money (Flooz, T-Money) • 💵 Espèces
