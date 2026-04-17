@@ -2,8 +2,13 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { usePageSeo } from "@/hooks/usePageSeo";
 
 const Contact = () => {
+  usePageSeo(
+    "Contact — Commandez & Contactez STEFCOS | Lomé, Togo",
+    "Contactez STEFCOS TOGO SARL pour vos commandes, questions ou conseils personnalisés. Nous sommes basés à Lomé et livrons partout au Togo."
+  );
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const revealRef = useScrollReveal();
 

@@ -7,6 +7,7 @@ import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { buildWhatsAppProductUrl, buildWhatsAppConseilUrl, formatPrice } from "@/lib/whatsapp";
 import OrderModal from "@/components/OrderModal";
+import { usePageSeo } from "@/hooks/usePageSeo";
 
 const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
@@ -17,6 +18,10 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const product = products.find((p) => p.id === id);
+  usePageSeo(
+    product ? `${product.name} — ${product.subtitle} | STEFCOS` : "Produit | STEFCOS",
+    product?.description
+  );
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [showOrderModal, setShowOrderModal] = useState(false);

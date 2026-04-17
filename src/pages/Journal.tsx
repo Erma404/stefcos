@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePageSeo } from "@/hooks/usePageSeo";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import ArticleIllustration from "@/components/ArticleIllustration";
@@ -9,6 +10,10 @@ import { articles } from "@/data/articles";
 const ARTICLES_PER_PAGE = 6; // 1 featured + 5 en grille
 
 const Journal = () => {
+  usePageSeo(
+    "Journal Beauté — Conseils Soins Peaux Noires & Mixtes | STEFCOS",
+    "Conseils beauté, routines de soins, ingrédients naturels africains. Le journal STEFCOS pour prendre soin de votre peau noire ou mixte au quotidien."
+  );
   const [page, setPage] = useState(1);
   const revealRef = useScrollReveal(page);
 

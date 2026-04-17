@@ -3,8 +3,13 @@ import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { products, categories } from "@/data/products";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { usePageSeo } from "@/hooks/usePageSeo";
 
 const Boutique = () => {
+  usePageSeo(
+    "Boutique — Soins Cosmétiques Peaux Noires & Mixtes | STEFCOS Togo",
+    "Découvrez toute la gamme STEFCOS : Glycéderm, Lait 72 Heures, Gommage, Savon naturel. Livraison à Lomé et partout au Togo."
+  );
   const [activeCategory, setActiveCategory] = useState("Tous");
   const revealRef = useScrollReveal();
 

@@ -5,6 +5,7 @@ import philosophieHero from "@/assets/philosophie-hero.jpeg";
 import { Leaf, Heart, Shield, Sparkles, FlaskConical, Users, Globe, Award, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
+import { usePageSeo } from "@/hooks/usePageSeo";
 
 const values = [
   {
@@ -102,6 +103,10 @@ const FaqItem = ({ question, answer }: { question: string; answer: string }) => 
 };
 
 const Philosophie = () => {
+  usePageSeo(
+    "Notre Philosophie — Cosmétiques Naturels pour Peaux Africaines | STEFCOS",
+    "Découvrez la philosophie STEFCOS : ingrédients naturels africains, formules scientifiques, beauté inclusive pour peaux noires et mixtes. Fabriqué au Togo."
+  );
   const revealRef = useScrollReveal();
 
   return (
