@@ -15,10 +15,14 @@ export const buildWhatsAppProductUrl = (product: Product, quantity = 1) => {
   const total = product.price * quantity;
   const orderId = generateOrderId();
   const message =
-    `Bonjour STEFCOS 👋, je souhaiterais passer une commande.\n\n` +
-    `🛒 *Commande N° ${orderId}*\n\n` +
-    `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(total)}\n\n` +
+    `Bonjour STEFCOS 👋, je souhaite passer une commande.\n\n` +
+    `🛒 *Commande N° ${orderId}*\n` +
+    `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(total)}\n` +
     `💰 *Total : ${formatPrice(total)}*\n\n` +
+    `📋 *Mes informations :*\n` +
+    `• Prénom : \n` +
+    `• Quartier / Zone : \n` +
+    `• Paiement : avant livraison (TMoney) / à la livraison\n\n` +
     `Merci de confirmer ma commande !`;
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
@@ -31,12 +35,18 @@ export const buildWhatsAppConseilUrl = () => {
 export const buildWhatsAppCartUrl = (items: { product: Product; quantity: number }[], totalPrice: number) => {
   const orderId = generateOrderId();
   let message =
-    `Bonjour STEFCOS 👋, je souhaiterais passer une commande.\n\n` +
-    `🛒 *Commande N° ${orderId}*\n\n`;
+    `Bonjour STEFCOS 👋, je souhaite passer une commande.\n\n` +
+    `🛒 *Commande N° ${orderId}*\n`;
   items.forEach(({ product, quantity }) => {
     message += `▸ ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(product.price * quantity)}\n`;
   });
-  message += `\n💰 *Total : ${formatPrice(totalPrice)}*\n\nMerci de confirmer ma commande !`;
+  message +=
+    `💰 *Total : ${formatPrice(totalPrice)}*\n\n` +
+    `📋 *Mes informations :*\n` +
+    `• Prénom : \n` +
+    `• Quartier / Zone : \n` +
+    `• Paiement : avant livraison (TMoney) / à la livraison\n\n` +
+    `Merci de confirmer ma commande !`;
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
 
