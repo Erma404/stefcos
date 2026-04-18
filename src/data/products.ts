@@ -104,6 +104,18 @@ export const products: Product[] = [
     badge: "Nouveauté",
     description: "Gamme spécialement formulée pour les peaux délicates des enfants. Douceur et hydratation sans compromis.",
   },
+  {
+    id: "dovena",
+    name: "Dovena",
+    subtitle: "Shampooing Nutritif à la Mangue",
+    price: 3200,
+    image: "/products/dovena/4.png",
+    cardImage: "/products/dovena/2.png",
+    gallery: ["/products/dovena/4.png", "/products/dovena/1.png", "/products/dovena/2.png", "/products/dovena/3.png"],
+    category: "Soins Cheveux",
+    badge: "Nouveau",
+    description: "Shampooing nutritif enrichi au beurre de mangue et aux protéines végétales. Formule douce qui nettoie en profondeur tout en apportant une hydratation intense aux cheveux secs, crépus et frisés. Cheveux souples, brillants et démêlés dès le premier lavage.",
+  },
 ];
 
-export const categories = ["Tous", "Soins Corps", "Traitements", "Savons", "Enfants"];
+export const categories = ["Tous", "Soins Corps", "Traitements", "Savons", "Soins Cheveux", "Enfants"];
