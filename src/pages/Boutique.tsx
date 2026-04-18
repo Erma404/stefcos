@@ -11,7 +11,7 @@ const Boutique = () => {
     "Découvrez toute la gamme STEFCOS : Glycéderm, Lait 72 Heures, Gommage, Savon naturel. Livraison à Lomé et partout au Togo."
   );
   const [activeCategory, setActiveCategory] = useState("Tous");
-  const revealRef = useScrollReveal();
+  const revealRef = useScrollReveal(activeCategory);
 
   const filtered = activeCategory === "Tous" ? products : products.filter((p) => p.category === activeCategory);
 
