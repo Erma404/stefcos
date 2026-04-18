@@ -109,7 +109,7 @@ export const products: Product[] = [
     name: "Dovena",
     subtitle: "Shampooing Nutritif à la Mangue",
     price: 3200,
-    image: "/products/dovena/4.png",
+    image: "/products/dovena/2.png",
     cardImage: "/products/dovena/2.png",
     gallery: ["/products/dovena/4.png", "/products/dovena/1.png", "/products/dovena/2.png", "/products/dovena/3.png"],
     category: "Soins Cheveux",
