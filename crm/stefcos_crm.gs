@@ -10,6 +10,7 @@ function setupCRM() {
   setupSheetCommandes(ss);
   setupSheetCoursiers(ss);
   setupSheetRelances(ss);
+  setupSheetScripts(ss);
   setupSheetDashboard(ss);
   createMenuCRM(ss);
 
@@ -259,7 +260,7 @@ function setupSheetRelances(ss) {
     '=IFERROR(FILTER(COMMANDES!F2:F1000, COMMANDES!P2:P1000=TODAY()-2, COMMANDES!Q2:Q1000="❌ À envoyer"), "")'
   );
   sheet.getRange('D6').setValue(
-    'Bonjour [Prénom] 😊\nAvez-vous bien commencé votre routine ?\nN\'hésitez pas si vous avez des questions 👌'
+    'Bonjour [Prénom] 😊\n\nAvez-vous bien commencé votre routine STEFCOS ?\n\nN\'hésitez pas si vous avez des questions — je suis là pour vous accompagner vers les résultats 👌'
   ).setBackground('#fffde7').setFontSize(9).setWrap(true);
   sheet.setRowHeight(6, 60);
 
@@ -280,7 +281,7 @@ function setupSheetRelances(ss) {
     '=IFERROR(FILTER(COMMANDES!F2:F1000, COMMANDES!P2:P1000=TODAY()-7, COMMANDES!R2:R1000="❌ À envoyer"), "")'
   );
   sheet.getRange('D12').setValue(
-    'Bonjour [Prénom] 😊\nVous devriez voir les premiers résultats ✨\nSouhaitez-vous optimiser votre routine ?'
+    'Bonjour [Prénom] 😊\n\nVous devriez commencer à voir les premiers résultats de votre soin STEFCOS ✨\n\nSi vous souhaitez aller plus loin — une routine complète (savon + lait + sérum) accélère vraiment les résultats.\n\nSouhaitez-vous que je vous conseille ? 👌'
   ).setBackground('#fffde7').setFontSize(9).setWrap(true);
   sheet.setRowHeight(12, 60);
 
@@ -301,11 +302,105 @@ function setupSheetRelances(ss) {
     '=IFERROR(FILTER(COMMANDES!F2:F1000, COMMANDES!P2:P1000=TODAY()-21, COMMANDES!S2:S1000="❌ À envoyer"), "")'
   );
   sheet.getRange('D18').setValue(
-    'Bonjour [Prénom] 😊\nIl est temps de renouveler votre routine 👌\nSouhaitez-vous que je prépare votre commande ?'
+    'Bonjour [Prénom] 😊\n\nPour maintenir les résultats obtenus avec vos soins STEFCOS, il est important de ne pas interrompre la routine.\n\nSouhaitez-vous que je prépare votre prochaine commande ? Je peux vous proposer un pack adapté à votre peau 👌'
   ).setBackground('#fffde7').setFontSize(9).setWrap(true);
   sheet.setRowHeight(18, 60);
 
   Logger.log('✅ Sheet RELANCES DU JOUR créée');
+}
+
+function setupSheetScripts(ss) {
+  let sheet = ss.getSheetByName('SCRIPTS WHATSAPP');
+  if (sheet) ss.deleteSheet(sheet);
+  sheet = ss.insertSheet('SCRIPTS WHATSAPP', 3);
+
+  sheet.setColumnWidth(1, 200);
+  sheet.setColumnWidth(2, 500);
+  sheet.setColumnWidth(3, 200);
+
+  // Titre
+  sheet.getRange('A1:C1').merge()
+    .setValue('💬 SCRIPTS WHATSAPP — STEFCOS')
+    .setBackground('#1a1a2e').setFontColor('#ffffff')
+    .setFontWeight('bold').setFontSize(14).setHorizontalAlignment('center');
+  sheet.setRowHeight(1, 45);
+
+  sheet.getRange('A2:C2').merge()
+    .setValue('Copiez le message, remplacez [Prénom] et le nom du produit, envoyez.')
+    .setBackground('#f8f9fa').setFontSize(10).setHorizontalAlignment('center').setFontStyle('italic');
+
+  const scripts = [
+    // [Catégorie, Message, Quand l'utiliser]
+    [
+      '🟢 BIENVENUE\n(après opt-in VIP)',
+      'Bonjour [Prénom] 😊\n\nMerci de rejoindre la famille STEFCOS 🙏\n\nJe suis là pour vous accompagner vers une peau éclatante, unifiée et bien hydratée.\n\nDites-moi, quel est votre besoin principal ?\n(taches, teint terne, peau sèche, éclaircissement, boutons...)\n\nJe vous prépare une routine sur-mesure 👌',
+      'Dès qu\'un client rejoint la liste VIP WhatsApp'
+    ],
+    [
+      '🟡 CONSEIL\n(valeur → conversion)',
+      'Bonjour [Prénom] 😊\n\nPetite astuce du jour 👇\n\nPour traiter efficacement les taches et unifier le teint, une routine complète est essentielle :\n✔ Savon Gommant 72H (nettoie en profondeur)\n✔ Lait Éclaircissant 72H (traite les taches)\n✔ Glycéderm (hydrate et fixe les résultats)\n\nAppliquée matin et soir, cette routine donne des résultats visibles en 2 à 3 semaines 💯\n\nSouhaitez-vous que je vous prépare ce pack ? 👌',
+      'Liste de diffusion 1-2x/semaine'
+    ],
+    [
+      '🔵 PROMOTION\n(offre limitée)',
+      'Bonjour [Prénom] 😊\n\nOffre spéciale cette semaine ✨\n\nNotre pack Teint Uniforme (Savon + Lait 72H + Glycéderm) est disponible avec une remise exclusive pour nos clientes WhatsApp.\n\nRésultats visibles en 2 semaines si la routine est bien suivie 💯\n\nQuantités limitées — souhaitez-vous en profiter ? 👌',
+      'Lors d\'une promo ou nouveauté'
+    ],
+    [
+      '🔴 RELANCE PANIER\n(intention d\'achat)',
+      'Bonjour [Prénom] 😊\n\nJe reviens vers vous concernant [nom du produit].\n\nIl est toujours disponible et très demandé en ce moment.\n\nSouhaitez-vous que je vous le réserve ? La livraison est rapide partout à Lomé 🚴',
+      'Client qui a posé une question sans commander'
+    ],
+    [
+      '🟣 SUIVI J+2\n(post-achat)',
+      'Bonjour [Prénom] 😊\n\nAvez-vous bien commencé votre routine STEFCOS ?\n\nN\'hésitez pas si vous avez des questions — je suis là pour vous accompagner vers les résultats 👌',
+      'J+2 après livraison'
+    ],
+    [
+      '🟣 RÉSULTATS J+7\n(fidélisation)',
+      'Bonjour [Prénom] 😊\n\nVous devriez commencer à voir les premiers effets de votre soin STEFCOS ✨\n\nSi vous souhaitez aller plus loin — associer [produit utilisé] à notre Glycéderm accélère vraiment les résultats.\n\nSouhaitez-vous que je vous conseille ? 👌',
+      'J+7 après livraison'
+    ],
+    [
+      '🔁 RÉACHAT J+21\n(rétention)',
+      'Bonjour [Prénom] 😊\n\nPour maintenir les beaux résultats obtenus avec vos soins STEFCOS, il est important de ne pas interrompre la routine.\n\nSouhaitez-vous que je prépare votre prochaine commande ? Je peux vous proposer un pack adapté à votre évolution 👌',
+      'J+21 après livraison'
+    ],
+    [
+      '🟠 RÉACTIVATION\n(client inactif)',
+      'Bonjour [Prénom] 😊\n\nCela fait un moment que nous n\'avons pas eu de vos nouvelles.\n\nNous avons de nouvelles formules et des routines améliorées depuis votre dernière commande ✨\n\nSouhaitez-vous que je vous fasse une recommandation personnalisée selon l\'évolution de votre peau ? 👌',
+      'Client sans commande depuis 45+ jours'
+    ],
+    [
+      '⭐ DEMANDE AVIS\n(preuve sociale)',
+      'Bonjour [Prénom] 😊\n\nNous espérons que vos soins STEFCOS vous donnent entière satisfaction ✨\n\nSi vous êtes satisfaite des résultats, un petit témoignage (photo avant/après ou message) nous aiderait énormément à faire connaître STEFCOS autour de vous 🙏\n\nEn remerciement, nous vous offrons -10% sur votre prochaine commande 💝',
+      'J+14 ou J+30 pour clients satisfaits'
+    ],
+    [
+      '👥 PARRAINAGE\n(bouche-à-oreille)',
+      'Bonjour [Prénom] 😊\n\nSaviez-vous que vous pouvez bénéficier de -10% en parrainant une amie ? 💝\n\nEnvoyez-lui simplement notre contact WhatsApp.\nDès sa première commande, vous recevez toutes les deux votre remise automatiquement.\n\nSans limite — chaque parrainage compte 🙏',
+      'Après J+7, pour clientes satisfaites'
+    ],
+  ];
+
+  const headerRow = ['Type de message', 'Message (copier-coller)', 'Quand l\'utiliser'];
+  sheet.getRange(3, 1, 1, 3).setValues([headerRow])
+    .setBackground('#1a1a2e').setFontColor('#ffffff')
+    .setFontWeight('bold').setFontSize(11).setHorizontalAlignment('center');
+  sheet.setRowHeight(3, 35);
+
+  scripts.forEach(([type, message, quand], i) => {
+    const row = 4 + i;
+    sheet.getRange(row, 1).setValue(type).setBackground(i % 2 === 0 ? '#f8f9fa' : '#ffffff')
+      .setFontWeight('bold').setFontSize(10).setWrap(true).setVerticalAlignment('top');
+    sheet.getRange(row, 2).setValue(message).setBackground(i % 2 === 0 ? '#fffde7' : '#fff9e6')
+      .setFontSize(10).setWrap(true).setVerticalAlignment('top');
+    sheet.getRange(row, 3).setValue(quand).setBackground(i % 2 === 0 ? '#f8f9fa' : '#ffffff')
+      .setFontSize(9).setFontStyle('italic').setWrap(true).setVerticalAlignment('top');
+    sheet.setRowHeight(row, 120);
+  });
+
+  Logger.log('✅ Sheet SCRIPTS WHATSAPP créée');
 }
 
 function setupSheetDashboard(ss) {
