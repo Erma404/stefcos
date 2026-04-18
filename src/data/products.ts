@@ -22,7 +22,7 @@ export const products: Product[] = [
     gallery: ["/products/lait-72h/2.png", "/products/lait-72h/1.png", "/products/lait-72h/3.png", "/products/lait-72h/4.png"],
     category: "Soins Corps",
     badge: "Bestseller",
-    description: "Lait de beauté éclaircissant aux acides de fruits pour un teint lumineux et uniforme.",
+    description: "Notre lait phare, formulé aux acides de fruits AHA pour accélérer le renouvellement cellulaire et unifier le teint en profondeur. Il estompe progressivement les taches brunes, les inégalités et l'hyperpigmentation post-inflammatoire. Texture fondante, absorption rapide, sans effet collant. Résultats visibles dès 72 heures. Idéal pour les peaux noires et métissées. Appliquer matin et soir sur peau propre et sèche.",
   },
   {
     id: "sublim-eclat",
@@ -33,7 +33,7 @@ export const products: Product[] = [
     cardImage: "/products/sublim-eclat/3.png",
     gallery: ["/products/sublim-eclat/1.png", "/products/sublim-eclat/2.png", "/products/sublim-eclat/3.png", "/products/sublim-eclat/4.png"],
     category: "Soins Corps",
-    description: "Lotion corporelle enrichie à l'huile de carotte pour une peau éclatante et nourrie.",
+    description: "Lotion corporelle luxuriante enrichie à l'huile de carotte et au bêta-carotène — puissants antioxydants qui illuminent et protègent la peau des agressions quotidiennes. Sa formule nourrissante hydrate intensément, raffermit et confère à la peau un éclat doré naturel. Idéale pour les peaux ternes, sèches ou manquant de luminosité. Appliquer généreusement après la douche sur peau encore légèrement humide pour maximiser l'absorption.",
   },
   {
     id: "bio-activ",
@@ -45,7 +45,7 @@ export const products: Product[] = [
     gallery: ["/products/bio-activ/1.png", "/products/bio-activ/2.png", "/products/bio-activ/3.png", "/products/bio-activ/4.png"],
     category: "Traitements",
     badge: "Nouveau",
-    description: "Spray traitant concentré en actifs naturels pour corriger les imperfections cutanées.",
+    description: "Traitement ciblé concentré en actifs naturels de haute efficacité pour corriger taches brunes, hyperpigmentation et marques post-acné. Sa formule spray innovante permet une application précise et une pénétration optimale dans les couches profondes de l'épiderme. Inhibe la production de mélanine en excès, régénère et uniformise le teint durablement. Résultats visibles en 2 à 4 semaines. À utiliser en cure intensive matin et soir sur les zones à traiter.",
   },
   {
     id: "sido-clair",
@@ -56,7 +56,7 @@ export const products: Product[] = [
     cardImage: "/products/sido-clair/1.png",
     gallery: ["/products/sido-clair/3.png", "/products/sido-clair/1.png", "/products/sido-clair/2.png", "/products/sido-clair/4.png"],
     category: "Soins Corps",
-    description: "Lait éclaircissant doux à l'avocat pour une peau douce et un teint harmonieux.",
+    description: "Lait éclaircissant enrichi à l'huile d'avocat, reconnue pour ses propriétés nourrissantes et régénérantes exceptionnelles. Sa formule douce estompe les taches, harmonise le teint et laisse la peau incroyablement souple. Convient aux peaux sensibles et réactives. Sans agressivité, il s'intègre à la routine quotidienne matin et soir. Résultats progressifs sur 3 à 4 semaines pour un teint naturellement unifié.",
   },
   {
     id: "savon-gommant",
@@ -67,7 +67,7 @@ export const products: Product[] = [
     cardImage: "/products/gommage-72h/3.png",
     gallery: ["/products/gommage-72h/2.png", "/products/gommage-72h/1.png", "/products/gommage-72h/3.png", "/products/gommage-72h/4.png"],
     category: "Savons",
-    description: "Savon gommant exfoliant pour éliminer les cellules mortes et révéler l'éclat naturel.",
+    description: "Savon gommant à double action : il élimine en douceur les cellules mortes accumulées et clarifie le teint en profondeur. Ses micro-grains naturels désincrustent les pores, lissent la peau et favorisent le renouvellement cellulaire. Prépare la peau à mieux absorber les soins hydratants ou éclaircissants appliqués après. Usage visage & corps. À utiliser 2 à 3 fois par semaine sur peau humide.",
   },
   {
     id: "savon-eclaircissant-72h",
@@ -79,7 +79,7 @@ export const products: Product[] = [
     gallery: ["/products/savon-72h/2.png", "/products/savon-72h/1.png", "/products/savon-72h/3.png", "/products/savon-72h/4.png"],
     category: "Savons",
     badge: "Bestseller",
-    description: "Savon éclaircissant aux acides de fruits AHA et extrait de Végéwhite. Usage visage & corps pour un teint unifié en 72 heures.",
+    description: "Le complément incontournable du Lait 72 Heures. Formulé aux acides de fruits AHA et à l'extrait de Végéwhite — actif végétal cliniquement prouvé pour unifier le teint — ce savon clarifiant agit dès le lavage pour exfolier doucement et stimuler le renouvellement cellulaire. Usage visage & corps. En association avec le Lait 72 Heures, il optimise l'action éclaircissante pour un résultat visible en 72 heures.",
   },
   {
     id: "glycederm",
