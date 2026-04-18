@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { products, categories } from "@/data/products";
@@ -10,7 +11,9 @@ const Boutique = () => {
     "Boutique — Soins Cosmétiques Peaux Noires & Mixtes | STEFCOS Togo",
     "Découvrez toute la gamme STEFCOS : Glycéderm, Lait 72 Heures, Gommage, Savon naturel. Livraison à Lomé et partout au Togo."
   );
-  const [activeCategory, setActiveCategory] = useState("Tous");
+  const [searchParams] = useSearchParams();
+  const initialCategory = categories.includes(searchParams.get("category") ?? "") ? searchParams.get("category")! : "Tous";
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
   const revealRef = useScrollReveal(activeCategory);
 
   const filtered = activeCategory === "Tous" ? products : products.filter((p) => p.category === activeCategory);

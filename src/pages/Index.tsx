@@ -169,7 +169,7 @@ const Index = () => {
                   </li>
                 </ul>
                 <Link
-                  to="/boutique/glycederm-kid"
+                  to="/boutique?category=Enfants"
                   className="group inline-flex items-center gap-3 bg-accent text-accent-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-accent/90 hover:gap-5 transition-all duration-300"
                 >
                   Découvrir la gamme
