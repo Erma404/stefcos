@@ -9,6 +9,7 @@ function setupCRM() {
 
   setupSheetCommandes(ss);
   setupSheetCoursiers(ss);
+  setupSheetRelances(ss);
   setupSheetDashboard(ss);
   createMenuCRM(ss);
 
@@ -26,10 +27,11 @@ function setupSheetCommandes(ss) {
 
   // En-têtes
   const headers = [
-    'ID Commande', 'Date', 'Nom Client', 'Téléphone',
+    'ID Commande', 'Date', 'Nom Client', 'Téléphone WhatsApp',
     'Quartier / Zone', 'Produits', 'Montant (FCFA)',
     'Paiement', 'Mode Paiement', 'Statut Commande', 'Coursier Assigné',
-    'Mode Commande', 'Priorité', 'Preuve Paiement', 'Commentaire'
+    'Mode Commande', 'Priorité', 'Preuve Paiement', 'Commentaire',
+    'Date Livraison', 'Relance J+2', 'Relance J+7', 'Relance J+21', 'Appel Rapide'
   ];
 
   const headerRange = sheet.getRange(1, 1, 1, headers.length);
@@ -44,7 +46,7 @@ function setupSheetCommandes(ss) {
   sheet.setRowHeight(1, 40);
 
   // Largeurs colonnes
-  const colWidths = [110, 100, 160, 130, 150, 200, 130, 120, 160, 150, 150, 130, 100, 130, 200];
+  const colWidths = [110, 100, 160, 150, 150, 200, 130, 120, 160, 150, 150, 130, 100, 130, 200, 120, 110, 110, 110, 130];
   colWidths.forEach((w, i) => sheet.setColumnWidth(i + 1, w));
 
   // Validation : Paiement statut (col 8)
@@ -122,8 +124,42 @@ function setupSheetCommandes(ss) {
   sheet.getRange(2, 1, 1, exemple.length).setValues([exemple]);
   sheet.getRange(2, 1, 1, exemple.length).setBackground('#fff3cd');
 
+  // Validation : Relances (col 17, 18, 19)
+  const relanceRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['✅ Envoyée', '❌ À envoyer', '⏭️ Ignorée'], true)
+    .setAllowInvalid(false).build();
+  sheet.getRange(2, 17, 500).setDataValidation(relanceRule);
+  sheet.getRange(2, 18, 500).setDataValidation(relanceRule);
+  sheet.getRange(2, 19, 500).setDataValidation(relanceRule);
+
+  // Formatage colonne Date Livraison (col 16)
+  sheet.getRange(2, 16, 500).setNumberFormat('dd/mm/yyyy');
+
+  // Formule automatique J+2, J+7, J+21 (affichage date cible)
+  // Ces colonnes montrent la DATE à laquelle envoyer la relance
+  sheet.getRange(1, 17).setValue('Relance J+2').setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setFontSize(11).setHorizontalAlignment('center');
+  sheet.getRange(1, 18).setValue('Relance J+7').setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setFontSize(11).setHorizontalAlignment('center');
+  sheet.getRange(1, 19).setValue('Relance J+21').setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setFontSize(11).setHorizontalAlignment('center');
+  sheet.getRange(1, 20).setValue('Appel Rapide').setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setFontSize(11).setHorizontalAlignment('center');
+
   // Filtre actif
   sheet.getRange(1, 1, 1, headers.length).createFilter();
+
+  // Mise en forme conditionnelle : relances en retard (date livraison passée + pas envoyée)
+  const rangeJ2 = sheet.getRange(2, 17, 500);
+  const ruleRetard = SpreadsheetApp.newConditionalFormatRule()
+    .whenTextEqualTo('❌ À envoyer')
+    .setBackground('#fde8e8')
+    .setFontColor('#c0392b')
+    .setRanges([rangeJ2, sheet.getRange(2, 18, 500), sheet.getRange(2, 19, 500)])
+    .build();
+  const ruleOk = SpreadsheetApp.newConditionalFormatRule()
+    .whenTextEqualTo('✅ Envoyée')
+    .setBackground('#e8f5e9')
+    .setFontColor('#27ae60')
+    .setRanges([rangeJ2, sheet.getRange(2, 18, 500), sheet.getRange(2, 19, 500)])
+    .build();
+  sheet.setConditionalFormatRules([ruleRetard, ruleOk]);
 
   Logger.log('✅ Sheet COMMANDES créée');
 }
@@ -176,6 +212,101 @@ function setupSheetCoursiers(ss) {
 // ============================================================
 // SHEET 3 : DASHBOARD KPI
 // ============================================================
+
+function setupSheetRelances(ss) {
+  let sheet = ss.getSheetByName('RELANCES DU JOUR');
+  if (sheet) ss.deleteSheet(sheet);
+  sheet = ss.insertSheet('RELANCES DU JOUR', 2);
+
+  sheet.setColumnWidth(1, 200);
+  sheet.setColumnWidth(2, 150);
+  sheet.setColumnWidth(3, 150);
+  sheet.setColumnWidth(4, 200);
+  sheet.setColumnWidth(5, 200);
+
+  // Titre
+  sheet.getRange('A1:E1').merge()
+    .setValue('📱 RELANCES WHATSAPP DU JOUR')
+    .setBackground('#25D366')
+    .setFontColor('#ffffff')
+    .setFontWeight('bold')
+    .setFontSize(14)
+    .setHorizontalAlignment('center');
+  sheet.setRowHeight(1, 45);
+
+  // Sous-titre date
+  sheet.getRange('A2:E2').merge()
+    .setFormula('="Aujourd\'hui : "&TEXT(TODAY(),"dd/mm/yyyy")')
+    .setBackground('#e8f5e9')
+    .setFontSize(11)
+    .setHorizontalAlignment('center');
+
+  // Section J+2
+  sheet.getRange('A4:E4').merge().setValue('⏰ J+2 — Suivi post-achat (à envoyer aujourd\'hui)')
+    .setBackground('#fff3e0').setFontWeight('bold').setFontSize(11);
+
+  const headersRelance = ['Client', 'Téléphone', 'Produits', 'Message à envoyer', 'Statut'];
+  sheet.getRange(5, 1, 1, 5).setValues([headersRelance])
+    .setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setHorizontalAlignment('center');
+
+  sheet.getRange('A6').setFormula(
+    '=IFERROR(FILTER(COMMANDES!C2:C1000, COMMANDES!P2:P1000=TODAY()-2, COMMANDES!Q2:Q1000="❌ À envoyer"), "Aucune relance J+2 aujourd\'hui")'
+  );
+  sheet.getRange('B6').setFormula(
+    '=IFERROR(FILTER(COMMANDES!D2:D1000, COMMANDES!P2:P1000=TODAY()-2, COMMANDES!Q2:Q1000="❌ À envoyer"), "")'
+  );
+  sheet.getRange('C6').setFormula(
+    '=IFERROR(FILTER(COMMANDES!F2:F1000, COMMANDES!P2:P1000=TODAY()-2, COMMANDES!Q2:Q1000="❌ À envoyer"), "")'
+  );
+  sheet.getRange('D6').setValue(
+    'Bonjour [Prénom] 😊\nAvez-vous bien commencé votre routine ?\nN\'hésitez pas si vous avez des questions 👌'
+  ).setBackground('#fffde7').setFontSize(9).setWrap(true);
+  sheet.setRowHeight(6, 60);
+
+  // Section J+7
+  sheet.getRange('A10:E10').merge().setValue('✨ J+7 — Relance résultats')
+    .setBackground('#e8f4fd').setFontWeight('bold').setFontSize(11);
+
+  sheet.getRange(11, 1, 1, 5).setValues([headersRelance])
+    .setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setHorizontalAlignment('center');
+
+  sheet.getRange('A12').setFormula(
+    '=IFERROR(FILTER(COMMANDES!C2:C1000, COMMANDES!P2:P1000=TODAY()-7, COMMANDES!R2:R1000="❌ À envoyer"), "Aucune relance J+7 aujourd\'hui")'
+  );
+  sheet.getRange('B12').setFormula(
+    '=IFERROR(FILTER(COMMANDES!D2:D1000, COMMANDES!P2:P1000=TODAY()-7, COMMANDES!R2:R1000="❌ À envoyer"), "")'
+  );
+  sheet.getRange('C12').setFormula(
+    '=IFERROR(FILTER(COMMANDES!F2:F1000, COMMANDES!P2:P1000=TODAY()-7, COMMANDES!R2:R1000="❌ À envoyer"), "")'
+  );
+  sheet.getRange('D12').setValue(
+    'Bonjour [Prénom] 😊\nVous devriez voir les premiers résultats ✨\nSouhaitez-vous optimiser votre routine ?'
+  ).setBackground('#fffde7').setFontSize(9).setWrap(true);
+  sheet.setRowHeight(12, 60);
+
+  // Section J+21
+  sheet.getRange('A16:E16').merge().setValue('🔁 J+21 — Relance réachat')
+    .setBackground('#fce4ec').setFontWeight('bold').setFontSize(11);
+
+  sheet.getRange(17, 1, 1, 5).setValues([headersRelance])
+    .setBackground('#1a1a2e').setFontColor('#ffffff').setFontWeight('bold').setHorizontalAlignment('center');
+
+  sheet.getRange('A18').setFormula(
+    '=IFERROR(FILTER(COMMANDES!C2:C1000, COMMANDES!P2:P1000=TODAY()-21, COMMANDES!S2:S1000="❌ À envoyer"), "Aucune relance J+21 aujourd\'hui")'
+  );
+  sheet.getRange('B18').setFormula(
+    '=IFERROR(FILTER(COMMANDES!D2:D1000, COMMANDES!P2:P1000=TODAY()-21, COMMANDES!S2:S1000="❌ À envoyer"), "")'
+  );
+  sheet.getRange('C18').setFormula(
+    '=IFERROR(FILTER(COMMANDES!F2:F1000, COMMANDES!P2:P1000=TODAY()-21, COMMANDES!S2:S1000="❌ À envoyer"), "")'
+  );
+  sheet.getRange('D18').setValue(
+    'Bonjour [Prénom] 😊\nIl est temps de renouveler votre routine 👌\nSouhaitez-vous que je prépare votre commande ?'
+  ).setBackground('#fffde7').setFontSize(9).setWrap(true);
+  sheet.setRowHeight(18, 60);
+
+  Logger.log('✅ Sheet RELANCES DU JOUR créée');
+}
 
 function setupSheetDashboard(ss) {
   let sheet = ss.getSheetByName('DASHBOARD');
@@ -262,8 +393,9 @@ function setupSheetDashboard(ss) {
 
 function fixDashboard() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
+  setupSheetRelances(ss);
   setupSheetDashboard(ss);
-  SpreadsheetApp.getUi().alert('✅ Dashboard corrigé !');
+  SpreadsheetApp.getUi().alert('✅ Dashboard et Relances mis à jour !');
 }
 
 function onOpen() {
@@ -274,6 +406,8 @@ function createMenuCRM(ss) {
   SpreadsheetApp.getUi()
     .createMenu('🚀 STEFCOS CRM')
     .addItem('➕ Nouvelle commande', 'nouvelleCommande')
+    .addSeparator()
+    .addItem('📱 Relances du jour', 'allerRelances')
     .addSeparator()
     .addItem('📋 Voir — À traiter', 'vueATraiter')
     .addItem('🚴 Voir — En livraison', 'vueEnLivraison')
@@ -328,6 +462,11 @@ function vueProblemes() {
 function allerDashboard() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   ss.setActiveSheet(ss.getSheetByName('DASHBOARD'));
+}
+
+function allerRelances() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  ss.setActiveSheet(ss.getSheetByName('RELANCES DU JOUR'));
 }
 
 function actualiserDashboard() {
