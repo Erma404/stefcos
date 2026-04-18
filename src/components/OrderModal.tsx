@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, MapPin, User, CreditCard } from "lucide-react";
+import { X, MapPin, User, CreditCard, Phone } from "lucide-react";
 import { formatPrice } from "@/lib/whatsapp";
 import type { Product } from "@/data/products";
 
@@ -20,19 +20,21 @@ interface OrderModalProps {
   items: OrderItem[];
   totalPrice: number;
   onClose: () => void;
-  buildUrl: (prenom: string, zone: string, paiement: string) => string;
+  buildUrl: (prenom: string, zone: string, paiement: string, telephone: string) => string;
 }
 
 const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) => {
   const [prenom, setPrenom] = useState("");
+  const [telephone, setTelephone] = useState("");
   const [zone, setZone] = useState("");
   const [paiement, setPaiement] = useState<"avant" | "livraison">("livraison");
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
     if (!prenom.trim()) { setError("Veuillez entrer votre prénom."); return; }
+    if (!telephone.trim()) { setError("Veuillez entrer votre numéro WhatsApp."); return; }
     if (!zone.trim()) { setError("Veuillez indiquer votre quartier."); return; }
-    const url = buildUrl(prenom.trim(), zone.trim(), paiement === "avant" ? "Avant livraison (TMoney)" : "À la livraison");
+    const url = buildUrl(prenom.trim(), zone.trim(), paiement === "avant" ? "Avant livraison (TMoney)" : "À la livraison", telephone.trim());
     window.open(url, "_blank");
     onClose();
   };
@@ -87,6 +89,21 @@ const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) =
                 onChange={(e) => { setPrenom(e.target.value); setError(""); }}
                 className="w-full border border-border rounded-sm px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-accent transition-colors"
               />
+            </div>
+
+            {/* Téléphone */}
+            <div className="space-y-1.5">
+              <label className="flex items-center gap-2 font-sans text-xs font-semibold uppercase tracking-wider text-foreground">
+                <Phone size={13} /> Votre numéro WhatsApp
+              </label>
+              <input
+                type="tel"
+                placeholder="ex : +228 90 00 00 00"
+                value={telephone}
+                onChange={(e) => { setTelephone(e.target.value); setError(""); }}
+                className="w-full border border-border rounded-sm px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-accent transition-colors"
+              />
+              <p className="font-sans text-[10px] text-muted-foreground">Nous vous contactons uniquement pour votre commande et suivi.</p>
             </div>
 
             {/* Zone */}

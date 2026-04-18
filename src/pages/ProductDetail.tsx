@@ -156,7 +156,7 @@ const ProductDetail = () => {
                 items={[{ product, quantity }]}
                 totalPrice={product.price * quantity}
                 onClose={() => setShowOrderModal(false)}
-                buildUrl={(prenom, zone, paiement) => buildWhatsAppProductUrl(product, quantity, prenom, zone, paiement)}
+                buildUrl={(prenom, zone, paiement, telephone) => buildWhatsAppProductUrl(product, quantity, prenom, zone, paiement, telephone)}
               />
             )}
 

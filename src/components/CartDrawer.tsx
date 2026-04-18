@@ -211,7 +211,7 @@ const CartDrawer = () => {
                 items={items}
                 totalPrice={totalPrice}
                 onClose={() => setShowOrderModal(false)}
-                buildUrl={(prenom, zone, paiement) => buildWhatsAppCartUrl(items, totalPrice, prenom, zone, paiement)}
+                buildUrl={(prenom, zone, paiement, telephone) => buildWhatsAppCartUrl(items, totalPrice, prenom, zone, paiement, telephone)}
               />
             )}
             <p className="font-sans text-[10px] text-muted-foreground text-center">

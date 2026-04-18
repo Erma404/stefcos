@@ -7,7 +7,7 @@ import { products } from "@/data/products";
 import { articles } from "@/data/articles";
 import { testimonials } from "@/data/testimonials";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { buildWhatsAppGenericUrl, buildWhatsAppConseilUrl } from "@/lib/whatsapp";
+import { buildWhatsAppGenericUrl, buildWhatsAppConseilUrl, buildWhatsAppParrainageUrl, buildWhatsAppVipUrl } from "@/lib/whatsapp";
 import heroBanner from "@/assets/hero-banner.jpg";
 import philosophyImg from "@/assets/philosophy.jpg";
 import conseilsImg from "@/assets/conseils-stefcos.jpeg";
@@ -450,6 +450,68 @@ const Index = () => {
         </section>
 
         {/* Trust Badges */}
+        {/* Section Parrainage */}
+        <section className="bg-foreground text-primary-foreground" data-reveal>
+          <div className="container mx-auto px-6 lg:px-12 py-16 md:py-20">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-primary-foreground/50 mb-3">Programme parrainage</p>
+                <h2 className="font-serif text-3xl md:text-4xl font-light leading-tight mb-4">
+                  Parrainez une amie,<br />
+                  <span className="italic">bénéficiez toutes les deux</span>
+                </h2>
+                <p className="font-sans text-sm text-primary-foreground/70 leading-relaxed mb-8">
+                  Partagez STEFCOS avec vos proches et recevez <strong className="text-primary-foreground">-10% chacune</strong> sur votre prochaine commande. Simple, immédiat, sur WhatsApp.
+                </p>
+                <a
+                  href={buildWhatsAppParrainageUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-[#25D366] text-white font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-[#1da851] transition-colors"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                  Parrainer une amie
+                </a>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { step: "1", text: "Envoyez ce message WhatsApp avec le nom de votre amie" },
+                  { step: "2", text: "Votre amie passe sa première commande" },
+                  { step: "3", text: "Vous recevez toutes les deux -10% automatiquement" },
+                  { step: "4", text: "Répétez sans limite — chaque parrainage compte" },
+                ].map(({ step, text }) => (
+                  <div key={step} className="bg-primary-foreground/10 rounded-sm p-4">
+                    <div className="font-serif text-2xl text-accent mb-2">{step}</div>
+                    <p className="font-sans text-xs text-primary-foreground/70 leading-relaxed">{text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section WhatsApp VIP */}
+        <section className="bg-[#25D366]" data-reveal>
+          <div className="container mx-auto px-6 lg:px-12 py-12 text-center">
+            <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-white/70 mb-3">Liste exclusive</p>
+            <h2 className="font-serif text-2xl md:text-3xl font-light text-white mb-3">
+              Rejoignez notre liste VIP WhatsApp
+            </h2>
+            <p className="font-sans text-sm text-white/80 mb-6 max-w-md mx-auto">
+              Offres exclusives, nouveautés en avant-première, conseils beauté personnalisés — et <strong className="text-white">-10%</strong> dès votre inscription.
+            </p>
+            <a
+              href={buildWhatsAppVipUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-white text-[#25D366] font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-white/90 transition-colors"
+            >
+              <WhatsAppIcon className="w-4 h-4" />
+              Rejoindre — c'est gratuit
+            </a>
+          </div>
+        </section>
+
         <section className="container mx-auto px-6 lg:px-12 py-16">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
