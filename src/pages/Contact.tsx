@@ -10,12 +10,36 @@ const Contact = () => {
     "Contactez STEFCOS TOGO SARL pour vos commandes, questions ou conseils personnalisés. Nous sommes basés à Lomé et livrons partout au Togo."
   );
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const revealRef = useScrollReveal();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Remplacer FORMSPREE_ID par l'ID obtenu sur formspree.io
+  const FORMSPREE_ID = "FORMSPREE_ID";
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Message envoyé ! Nous vous répondrons dans les plus brefs délais.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _cc: "Hermannzoumi1@gmail.com",
+        }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -130,11 +154,22 @@ const Contact = () => {
                 placeholder="Votre message..."
               />
             </div>
+            {status === "success" && (
+              <p className="font-sans text-sm text-green-600 bg-green-50 border border-green-200 rounded-sm px-4 py-3">
+                Message envoyé ! Nous vous répondrons dans les plus brefs délais.
+              </p>
+            )}
+            {status === "error" && (
+              <p className="font-sans text-sm text-red-600 bg-red-50 border border-red-200 rounded-sm px-4 py-3">
+                Une erreur est survenue. Veuillez réessayer ou nous contacter sur WhatsApp.
+              </p>
+            )}
             <button
               type="submit"
-              className="group inline-flex items-center gap-3 bg-primary text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-primary/90 hover:gap-5 transition-all duration-300"
+              disabled={status === "sending"}
+              className="group inline-flex items-center gap-3 bg-primary text-primary-foreground font-sans text-xs font-semibold tracking-widest uppercase px-8 py-4 hover:bg-primary/90 hover:gap-5 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Envoyer
+              {status === "sending" ? "Envoi en cours..." : "Envoyer"}
               <Send size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </form>
