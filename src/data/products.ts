@@ -73,7 +73,7 @@ export const products: Product[] = [
     id: "sido-clair",
     name: "Sido Clair",
     subtitle: "Lait Éclaircissant à l'Avocat",
-    price: 4200,
+    price: 1500,
     crossSell: ["savon-gommant", "72heures"],
     image: "/products/sido-clair/3.png",
     cardImage: "/products/sido-clair/1.png",
