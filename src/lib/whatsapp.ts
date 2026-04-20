@@ -1,7 +1,7 @@
 import type { Product } from "@/data/products";
 import type { CartItem } from "@/contexts/CartContext";
 
-const PHONE = "33611109870";
+const PHONE = "22893684943";
 
 export const formatPrice = (price: number) =>
   new Intl.NumberFormat("fr-FR").format(price) + " FCFA";
