@@ -4,6 +4,7 @@ import { Minus, Plus, ShoppingBag, Truck, Shield, RotateCcw, CreditCard, Message
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/data/products";
+import type { ProductVariant } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 import { buildWhatsAppProductUrl, buildWhatsAppConseilUrl, formatPrice } from "@/lib/whatsapp";
 import OrderModal from "@/components/OrderModal";
@@ -28,6 +29,12 @@ const ProductDetail = () => {
   const images = product?.gallery?.length ? product.gallery : product ? [product.image] : [];
   const [selectedImage, setSelectedImage] = useState(0);
 
+  const hasVariants = (product?.variants?.length ?? 0) > 1;
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | undefined>(
+    product?.variants?.[0]
+  );
+  const currentPrice = selectedVariant?.price ?? product?.price ?? 0;
+
   if (!product) {
     return (
       <Layout>
@@ -42,6 +49,9 @@ const ProductDetail = () => {
   }
 
   const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
+  const crossSellProducts = product.crossSell
+    ? products.filter((p) => product.crossSell!.includes(p.id))
+    : [];
 
   return (
     <Layout>
@@ -61,7 +71,6 @@ const ProductDetail = () => {
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
           {/* Image + Galerie */}
           <div className="flex flex-col gap-3">
-            {/* Image principale */}
             <div className="relative aspect-square bg-secondary rounded-sm overflow-hidden">
               <img
                 src={images[selectedImage]}
@@ -76,7 +85,6 @@ const ProductDetail = () => {
                 </span>
               )}
             </div>
-            {/* Miniatures */}
             {images.length > 1 && (
               <div className="flex gap-2">
                 {images.map((src, i) => (
@@ -100,10 +108,34 @@ const ProductDetail = () => {
               {product.category}
             </p>
             <h1 className="font-serif text-4xl md:text-5xl font-light mb-2">{product.name}</h1>
-            <p className="font-sans text-sm text-muted-foreground mb-6">{product.subtitle}</p>
+            <p className="font-sans text-sm text-muted-foreground mb-4">{product.subtitle}</p>
+
+            {/* Sélecteur de taille */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-4">
+                <p className="font-sans text-[10px] tracking-widest uppercase text-muted-foreground mb-2">
+                  {hasVariants ? "Choisir le format" : "Format"}
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {product.variants.map((v) => (
+                    <button
+                      key={v.size}
+                      onClick={() => setSelectedVariant(v)}
+                      className={`font-sans text-xs font-semibold px-4 py-2 border rounded-sm transition-colors ${
+                        selectedVariant?.size === v.size
+                          ? "border-accent bg-accent text-accent-foreground"
+                          : "border-border hover:border-accent"
+                      }`}
+                    >
+                      {v.size} — {formatPrice(v.price)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <p className="font-serif text-3xl font-medium text-foreground mb-6">
-              {formatPrice(product.price)}
+              {formatPrice(currentPrice)}
             </p>
 
             <div className="border-t border-border pt-6 mb-6">
@@ -133,7 +165,7 @@ const ProductDetail = () => {
               </div>
               <button
                 onClick={() => {
-                  addItem(product, quantity);
+                  addItem(product, quantity, selectedVariant);
                   setQuantity(1);
                 }}
                 className="flex-1 flex items-center justify-center gap-3 bg-accent text-accent-foreground font-sans text-xs font-semibold tracking-widest uppercase h-12 px-6 hover:bg-accent/90 transition-colors"
@@ -154,9 +186,11 @@ const ProductDetail = () => {
             {showOrderModal && (
               <OrderModal
                 items={[{ product, quantity }]}
-                totalPrice={product.price * quantity}
+                totalPrice={currentPrice * quantity}
                 onClose={() => setShowOrderModal(false)}
-                buildUrl={(prenom, zone, paiement, telephone) => buildWhatsAppProductUrl(product, quantity, prenom, zone, paiement, telephone)}
+                buildUrl={(prenom, zone, paiement, telephone) =>
+                  buildWhatsAppProductUrl(product, quantity, prenom, zone, paiement, telephone, selectedVariant?.size)
+                }
               />
             )}
 
@@ -188,13 +222,50 @@ const ProductDetail = () => {
               ))}
             </div>
 
-            {/* Payment info */}
             <p className="font-sans text-[10px] text-muted-foreground text-center mt-4">
-              💳 Mobile Money (Flooz, T-Money) • 💵 Espèces à la livraison
+              Mobile Money (Flooz, T-Money) · Espèces à la livraison
             </p>
           </div>
         </div>
       </section>
+
+      {/* Cross-sell */}
+      {crossSellProducts.length > 0 && (
+        <section className="container mx-auto px-6 lg:px-12 py-16 border-t border-border">
+          <div className="text-center mb-10">
+            <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mb-3">
+              Complétez votre routine
+            </p>
+            <h2 className="font-serif text-3xl font-light">À Associer Avec</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {crossSellProducts.map((p) => (
+              <div key={p.id} className="border border-border rounded-sm p-4 flex flex-col items-center gap-3 text-center hover:border-accent transition-colors group">
+                <Link to={`/boutique/${p.id}`} className="w-full">
+                  <div className="aspect-square overflow-hidden rounded-sm bg-secondary mb-2">
+                    <img
+                      src={p.cardImage || p.image}
+                      alt={p.name}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <p className="font-serif text-sm font-medium">{p.name}</p>
+                  <p className="font-sans text-[10px] text-muted-foreground uppercase tracking-wider">{p.subtitle}</p>
+                  <p className="font-sans text-sm font-semibold mt-1">
+                    {p.variants ? `Dès ${formatPrice(p.price)}` : formatPrice(p.price)}
+                  </p>
+                </Link>
+                <button
+                  onClick={() => addItem(p, 1, p.variants?.[0])}
+                  className="w-full font-sans text-[10px] font-semibold tracking-widest uppercase border border-accent text-accent py-2 hover:bg-accent hover:text-accent-foreground transition-colors rounded-sm"
+                >
+                  + Ajouter au panier
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Related */}
       {related.length > 0 && (

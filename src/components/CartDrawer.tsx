@@ -67,15 +67,16 @@ const CartDrawer = () => {
             </div>
           ) : (
             <div className="space-y-5">
-              {items.map(({ product, quantity }) => {
+              {items.map(({ product, quantity, selectedVariant, cartKey }) => {
+                const unitPrice = selectedVariant?.price ?? product.price;
                 const discountRate = getItemDiscount(quantity);
-                const lineOriginal = product.price * quantity;
+                const lineOriginal = unitPrice * quantity;
                 const lineDiscounted = lineOriginal * (1 - discountRate);
                 const nextThreshold = quantity === 1 ? 2 : quantity === 2 ? 3 : null;
                 const nextDiscount = nextThreshold === 2 ? 5 : nextThreshold === 3 ? 10 : null;
 
                 return (
-                  <div key={product.id} className="space-y-2">
+                  <div key={cartKey} className="space-y-2">
                     <div className="flex gap-4">
                       <Link
                         to={`/boutique/${product.id}`}
@@ -98,7 +99,7 @@ const CartDrawer = () => {
                           )}
                         </div>
                         <p className="font-sans text-[10px] text-muted-foreground uppercase tracking-wider">
-                          {product.subtitle}
+                          {selectedVariant ? selectedVariant.size : product.subtitle}
                         </p>
                         <div className="flex items-center gap-2 mt-1">
                           <p className="font-sans text-sm font-semibold">{formatPrice(lineDiscounted)}</p>
@@ -108,20 +109,20 @@ const CartDrawer = () => {
                         </div>
                         <div className="flex items-center gap-3 mt-2">
                           <button
-                            onClick={() => updateQuantity(product.id, quantity - 1)}
+                            onClick={() => updateQuantity(cartKey, quantity - 1)}
                             className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:bg-secondary transition-colors"
                           >
                             <Minus size={12} />
                           </button>
                           <span className="font-sans text-sm font-medium w-5 text-center">{quantity}</span>
                           <button
-                            onClick={() => updateQuantity(product.id, quantity + 1)}
+                            onClick={() => updateQuantity(cartKey, quantity + 1)}
                             className="w-7 h-7 flex items-center justify-center border border-border rounded-sm hover:bg-secondary transition-colors"
                           >
                             <Plus size={12} />
                           </button>
                           <button
-                            onClick={() => removeItem(product.id)}
+                            onClick={() => removeItem(cartKey)}
                             className="ml-auto p-1 text-muted-foreground hover:text-destructive transition-colors"
                           >
                             <Trash2 size={14} />
@@ -132,7 +133,7 @@ const CartDrawer = () => {
                     {/* Nudge vers la prochaine remise */}
                     {nextThreshold && nextDiscount && (
                       <button
-                        onClick={() => updateQuantity(product.id, quantity + 1)}
+                        onClick={() => updateQuantity(cartKey, quantity + 1)}
                         className="w-full text-left bg-accent/10 border border-accent/30 rounded-sm px-3 py-1.5 font-sans text-[10px] text-accent font-semibold hover:bg-accent/20 transition-colors"
                       >
                         ✦ Ajoutez 1 exemplaire de plus → économisez {nextDiscount}% sur cet article

@@ -1,8 +1,15 @@
+export interface ProductVariant {
+  size: string;
+  price: number;
+}
+
 export interface Product {
   id: string;
   name: string;
   subtitle: string;
-  price: number;
+  price: number; // prix de départ (variant le moins cher)
+  variants?: ProductVariant[];
+  crossSell?: string[]; // IDs des produits complémentaires
   image: string;
   cardImage?: string;
   gallery?: string[];
@@ -16,7 +23,12 @@ export const products: Product[] = [
     id: "72heures",
     name: "72 Heures",
     subtitle: "Lait Éclaircissant",
-    price: 4500,
+    price: 1500,
+    variants: [
+      { size: "300ml", price: 1500 },
+      { size: "500ml", price: 2500 },
+    ],
+    crossSell: ["savon-eclaircissant-72h", "savon-gommant"],
     image: "/products/lait-72h/2.png",
     cardImage: "/products/lait-72h/3.png",
     gallery: ["/products/lait-72h/2.png", "/products/lait-72h/1.png", "/products/lait-72h/3.png", "/products/lait-72h/4.png"],
@@ -28,7 +40,12 @@ export const products: Product[] = [
     id: "sublim-eclat",
     name: "Sublim Éclat",
     subtitle: "Lotion à l'Huile de Carotte",
-    price: 3800,
+    price: 1500,
+    variants: [
+      { size: "300ml", price: 1500 },
+      { size: "500ml", price: 2500 },
+    ],
+    crossSell: ["savon-gommant", "sido-clair"],
     image: "/products/sublim-eclat/1.png",
     cardImage: "/products/sublim-eclat/3.png",
     gallery: ["/products/sublim-eclat/1.png", "/products/sublim-eclat/2.png", "/products/sublim-eclat/3.png", "/products/sublim-eclat/4.png"],
@@ -39,7 +56,12 @@ export const products: Product[] = [
     id: "bio-activ",
     name: "Bio Activ",
     subtitle: "Traitement Anti-taches",
-    price: 5200,
+    price: 1500,
+    variants: [
+      { size: "300ml", price: 1500 },
+      { size: "500ml", price: 2500 },
+    ],
+    crossSell: ["savon-eclaircissant-72h", "72heures"],
     image: "/products/bio-activ/1.png",
     cardImage: "/products/bio-activ/4.png",
     gallery: ["/products/bio-activ/1.png", "/products/bio-activ/2.png", "/products/bio-activ/3.png", "/products/bio-activ/4.png"],
@@ -52,6 +74,7 @@ export const products: Product[] = [
     name: "Sido Clair",
     subtitle: "Lait Éclaircissant à l'Avocat",
     price: 4200,
+    crossSell: ["savon-gommant", "72heures"],
     image: "/products/sido-clair/3.png",
     cardImage: "/products/sido-clair/1.png",
     gallery: ["/products/sido-clair/3.png", "/products/sido-clair/1.png", "/products/sido-clair/2.png", "/products/sido-clair/4.png"],
@@ -62,7 +85,11 @@ export const products: Product[] = [
     id: "savon-gommant",
     name: "Savon Gommant",
     subtitle: "Exfoliant & Clarifiant",
-    price: 1500,
+    price: 1000,
+    variants: [
+      { size: "125g", price: 1000 },
+    ],
+    crossSell: ["72heures", "sublim-eclat"],
     image: "/products/gommage-72h/2.png",
     cardImage: "/products/gommage-72h/3.png",
     gallery: ["/products/gommage-72h/2.png", "/products/gommage-72h/1.png", "/products/gommage-72h/3.png", "/products/gommage-72h/4.png"],
@@ -73,7 +100,11 @@ export const products: Product[] = [
     id: "savon-eclaircissant-72h",
     name: "Savon Éclaircissant 72H",
     subtitle: "Savon AHA Au Végéwhite",
-    price: 1500,
+    price: 1000,
+    variants: [
+      { size: "125g", price: 1000 },
+    ],
+    crossSell: ["72heures", "bio-activ"],
     image: "/products/savon-72h/2.png",
     cardImage: "/products/savon-72h/4.png",
     gallery: ["/products/savon-72h/2.png", "/products/savon-72h/1.png", "/products/savon-72h/3.png", "/products/savon-72h/4.png"],
@@ -85,7 +116,11 @@ export const products: Product[] = [
     id: "glycederm",
     name: "Glycederm",
     subtitle: "Le Véritable Savon de Marseille",
-    price: 2000,
+    price: 700,
+    variants: [
+      { size: "175g", price: 700 },
+    ],
+    crossSell: ["savon-gommant", "72heures"],
     image: "/products/glycederm/2.jpeg",
     cardImage: "/products/glycederm/2.jpeg",
     gallery: ["/products/glycederm/2.jpeg", "/products/glycederm/3.jpeg", "/products/glycederm/1.jpeg", "/products/glycederm/4.jpeg"],
@@ -96,7 +131,11 @@ export const products: Product[] = [
     id: "savon-glycederm-enfant",
     name: "Savon Glycederm Enfant",
     subtitle: "Savon Surgras au Beurre de Karité",
-    price: 2000,
+    price: 1000,
+    variants: [
+      { size: "175g", price: 1000 },
+    ],
+    crossSell: ["lait-glycederm-enfant"],
     image: "/products/savon-glycederm-enfant/2.png",
     cardImage: "/products/savon-glycederm-enfant/2.png",
     gallery: ["/products/savon-glycederm-enfant/2.png", "/products/savon-glycederm-enfant/4.png", "/products/savon-glycederm-enfant/1.png", "/products/savon-glycederm-enfant/3.png"],
@@ -108,7 +147,12 @@ export const products: Product[] = [
     id: "lait-glycederm-enfant",
     name: "Lait Glycederm Enfant",
     subtitle: "Lait Hydratant Corps & Visage",
-    price: 2500,
+    price: 1000,
+    variants: [
+      { size: "250ml", price: 1000 },
+      { size: "750ml", price: 2000 },
+    ],
+    crossSell: ["savon-glycederm-enfant"],
     image: "/products/lait-glycederm-enfant/2.png",
     cardImage: "/products/lait-glycederm-enfant/2.png",
     gallery: ["/products/lait-glycederm-enfant/2.png", "/products/lait-glycederm-enfant/4.png", "/products/lait-glycederm-enfant/1.png", "/products/lait-glycederm-enfant/3.png"],
@@ -119,7 +163,12 @@ export const products: Product[] = [
     id: "dovena",
     name: "Dovena",
     subtitle: "Shampooing Nutritif à la Mangue",
-    price: 3200,
+    price: 1500,
+    variants: [
+      { size: "500ml", price: 1500 },
+      { size: "1L", price: 2500 },
+    ],
+    crossSell: ["72heures", "sublim-eclat"],
     image: "/products/dovena/2.png",
     cardImage: "/products/dovena/2.png",
     gallery: ["/products/dovena/4.png", "/products/dovena/1.png", "/products/dovena/2.png", "/products/dovena/3.png"],

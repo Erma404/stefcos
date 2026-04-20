@@ -1,4 +1,5 @@
 import type { Product } from "@/data/products";
+import type { CartItem } from "@/contexts/CartContext";
 
 const PHONE = "33611109870";
 
@@ -11,13 +12,17 @@ const generateOrderId = () => {
   return `STC-${year}-${rand}`;
 };
 
-export const buildWhatsAppProductUrl = (product: Product, quantity = 1, prenom = "", zone = "", paiement = "", telephone = "") => {
-  const total = product.price * quantity;
+export const buildWhatsAppProductUrl = (product: Product, quantity = 1, prenom = "", zone = "", paiement = "", telephone = "", size?: string) => {
+  const unitPrice = size
+    ? (product.variants?.find((v) => v.size === size)?.price ?? product.price)
+    : product.price;
+  const total = unitPrice * quantity;
   const orderId = generateOrderId();
+  const sizeLabel = size ? ` — ${size}` : "";
   const message =
     `Bonjour STEFCOS, je souhaite passer une commande.\n\n` +
     `*Commande N° ${orderId}*\n` +
-    `- ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(total)}\n` +
+    `- ${product.name}${sizeLabel} x${quantity} — ${formatPrice(total)}\n` +
     `*Total : ${formatPrice(total)}*\n\n` +
     `*Mes informations :*\n` +
     `- Prénom : ${prenom}\n` +
@@ -33,13 +38,15 @@ export const buildWhatsAppConseilUrl = () => {
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
 };
 
-export const buildWhatsAppCartUrl = (items: { product: Product; quantity: number }[], totalPrice: number, prenom = "", zone = "", paiement = "", telephone = "") => {
+export const buildWhatsAppCartUrl = (items: CartItem[], totalPrice: number, prenom = "", zone = "", paiement = "", telephone = "") => {
   const orderId = generateOrderId();
   let message =
     `Bonjour STEFCOS, je souhaite passer une commande.\n\n` +
     `*Commande N° ${orderId}*\n`;
-  items.forEach(({ product, quantity }) => {
-    message += `- ${product.name} (${product.subtitle}) x${quantity} — ${formatPrice(product.price * quantity)}\n`;
+  items.forEach(({ product, quantity, selectedVariant }) => {
+    const unitPrice = selectedVariant?.price ?? product.price;
+    const sizeLabel = selectedVariant ? ` — ${selectedVariant.size}` : "";
+    message += `- ${product.name}${sizeLabel} x${quantity} — ${formatPrice(unitPrice * quantity)}\n`;
   });
   message +=
     `*Total : ${formatPrice(totalPrice)}*\n\n` +
