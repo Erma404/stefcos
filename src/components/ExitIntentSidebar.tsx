@@ -5,16 +5,24 @@ import { products } from "@/data/products";
 import { useCart } from "@/contexts/CartContext";
 
 const INACTIVITY_DELAY = 180_000; // 3 minutes
+const MIN_TIME_ON_PAGE  = 180_000; // 3 minutes minimum avant tout déclenchement
 
 const ExitIntentSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [ready, setReady] = useState(false);
   const { addItem } = useCart();
 
+  // N'autorise le popup qu'après 45 s sur la page
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), MIN_TIME_ON_PAGE);
+    return () => clearTimeout(t);
+  }, []);
+
   const show = useCallback(() => {
-    if (dismissed) return;
+    if (dismissed || !ready) return;
     setIsOpen(true);
-  }, [dismissed]);
+  }, [dismissed, ready]);
 
   // Exit intent (mouse leaves viewport top)
   useEffect(() => {
