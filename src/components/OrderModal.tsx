@@ -23,6 +23,8 @@ interface OrderModalProps {
   buildUrl: (prenom: string, zone: string, paiement: string, telephone: string) => string;
 }
 
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbyTWQ8YPX4Hh93yO7WfVtdAzPLOo5JudfnGh-5ijVv2ZsOYTuTJvTSFPD7WIn8fd4II2A/exec";
+
 const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) => {
   const [prenom, setPrenom] = useState("");
   const [telephone, setTelephone] = useState("");
@@ -34,7 +36,26 @@ const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) =
     if (!prenom.trim()) { setError("Veuillez entrer votre prénom."); return; }
     if (!telephone.trim()) { setError("Veuillez entrer votre numéro WhatsApp."); return; }
     if (!zone.trim()) { setError("Veuillez indiquer votre quartier."); return; }
-    const url = buildUrl(prenom.trim(), zone.trim(), paiement === "avant" ? "Avant livraison (TMoney)" : "À la livraison", telephone.trim());
+
+    const paiementLabel = paiement === "avant" ? "Avant livraison (TMoney)" : "À la livraison";
+
+    // Envoi vers Google Sheets CRM
+    fetch(SHEETS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type:     "order",
+        prenom:   prenom.trim(),
+        quartier: zone.trim(),
+        paiement: paiementLabel,
+        produits: items.map(({ product, quantity }) => `${product.name} ×${quantity}`).join(", "),
+        total:    `${totalPrice} FCFA`,
+        statut:   "Nouvelle commande",
+      }),
+    }).catch(() => {});
+
+    const url = buildUrl(prenom.trim(), zone.trim(), paiementLabel, telephone.trim());
     window.open(url, "_blank");
     onClose();
   };
