@@ -45,13 +45,14 @@ const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) =
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        type:     "order",
-        prenom:   prenom.trim(),
-        quartier: zone.trim(),
-        paiement: paiementLabel,
-        produits: items.map(({ product, quantity }) => `${product.name} ×${quantity}`).join(", "),
-        total:    `${totalPrice} FCFA`,
-        statut:   "Nouvelle commande",
+        type:      "order",
+        prenom:    prenom.trim(),
+        telephone: telephone.trim(),
+        quartier:  zone.trim(),
+        paiement:  paiementLabel,
+        produits:  items.map(({ product, quantity }) => `${product.name} ×${quantity}`).join(", "),
+        total:     `${totalPrice} FCFA`,
+        statut:    "Nouvelle commande",
       }),
     }).catch(() => {});
 
