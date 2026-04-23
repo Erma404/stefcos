@@ -1,10 +1,10 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import philosophyImg from "@/assets/philosophy.jpg";
 import philosophieHero from "@/assets/philosophie-hero.jpeg";
 import { Leaf, Heart, Shield, Sparkles, FlaskConical, Users, Globe, Award, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { useState } from "react";
 import { usePageSeo } from "@/hooks/usePageSeo";
 
 const values = [
@@ -105,9 +105,31 @@ const FaqItem = ({ question, answer }: { question: string; answer: string }) => 
 const Philosophie = () => {
   usePageSeo(
     "Notre Philosophie — Cosmétiques Naturels pour Peaux Africaines | STEFCOS",
-    "Découvrez la philosophie STEFCOS : ingrédients naturels africains, formules scientifiques, beauté inclusive pour peaux noires et mixtes. Fabriqué au Togo."
+    "Découvrez la philosophie STEFCOS : ingrédients naturels africains, formules scientifiques, beauté inclusive pour peaux noires et mixtes. Fabriqué au Togo.",
+    "/philosophie"
   );
   const revealRef = useScrollReveal();
+
+  useEffect(() => {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(f => ({
+        "@type": "Question",
+        "name": f.question,
+        "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+      })),
+    };
+    let el = document.getElementById("schema-faq") as HTMLScriptElement | null;
+    if (!el) {
+      el = document.createElement("script");
+      el.id = "schema-faq";
+      el.type = "application/ld+json";
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(schema);
+    return () => { el?.remove(); };
+  }, []);
 
   return (
     <Layout>

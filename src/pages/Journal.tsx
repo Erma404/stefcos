@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePageSeo } from "@/hooks/usePageSeo";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
@@ -12,9 +12,41 @@ const ARTICLES_PER_PAGE = 6; // 1 featured + 5 en grille
 const Journal = () => {
   usePageSeo(
     "Journal Beauté — Conseils Soins Peaux Noires & Mixtes | STEFCOS",
-    "Conseils beauté, routines de soins, ingrédients naturels africains. Le journal STEFCOS pour prendre soin de votre peau noire ou mixte au quotidien."
+    "Conseils beauté, routines de soins, ingrédients naturels africains. Le journal STEFCOS pour prendre soin de votre peau noire ou mixte au quotidien.",
+    "/journal"
   );
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Journal Beauté STEFCOS",
+      "description": "Conseils beauté et routines de soins pour peaux noires et mixtes par STEFCOS Togo.",
+      "url": "https://www.stefcos.com/journal",
+      "publisher": {
+        "@type": "Organization",
+        "name": "STEFCOS TOGO SARL",
+        "url": "https://www.stefcos.com",
+      },
+      "blogPost": articles.slice(0, 10).map(a => ({
+        "@type": "BlogPosting",
+        "headline": a.title,
+        "description": a.excerpt,
+        "url": `https://www.stefcos.com/journal/${a.slug}`,
+        "author": { "@type": "Organization", "name": "STEFCOS" },
+      })),
+    };
+    let el = document.getElementById("schema-blog") as HTMLScriptElement | null;
+    if (!el) {
+      el = document.createElement("script");
+      el.id = "schema-blog";
+      el.type = "application/ld+json";
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(schema);
+    return () => { el?.remove(); };
+  }, []);
   const revealRef = useScrollReveal(page);
 
   const totalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
