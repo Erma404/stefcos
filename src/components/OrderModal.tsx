@@ -43,7 +43,7 @@ const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) =
     fetch(SHEETS_URL, {
       method: "POST",
       mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain" },
       body: JSON.stringify({
         type:      "order",
         prenom:    prenom.trim(),
