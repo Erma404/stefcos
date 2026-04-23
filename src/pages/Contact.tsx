@@ -82,10 +82,8 @@ const Contact = () => {
                 <div>
                   <h4 className="font-sans text-sm font-semibold mb-1">Téléphone</h4>
                   <div className="font-sans text-sm text-muted-foreground space-y-1">
-                    <p>(+228) 79 79 23 25</p>
-                    <p>(+228) 90 54 22 75</p>
-                    <p>(+228) 70 43 09 92</p>
                     <p>(+228) 93 68 49 43</p>
+                    <p>(+228) 90 23 16 33</p>
                   </div>
                 </div>
               </div>

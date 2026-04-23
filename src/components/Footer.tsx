@@ -45,8 +45,8 @@ const Footer = () => {
               <p>Zone industrielle, Carrefour Ramatou</p>
               <p>Zone Portuaire - 07 BP 7300</p>
               <p>Lomé - Togo</p>
-              <p className="pt-2">(+228) 79 79 23 25</p>
-              <p>(+228) 90 54 22 75</p>
+              <p className="pt-2">(+228) 93 68 49 43</p>
+              <p>(+228) 90 23 16 33</p>
             </div>
           </div>
         </div>
