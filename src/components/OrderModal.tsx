@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, MapPin, User, CreditCard, Phone } from "lucide-react";
 import { formatPrice } from "@/lib/whatsapp";
 import type { Product } from "@/data/products";
+import { supabase } from "@/lib/supabase";
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
@@ -38,6 +39,24 @@ const OrderModal = ({ items, totalPrice, onClose, buildUrl }: OrderModalProps) =
     if (!zone.trim()) { setError("Veuillez indiquer votre quartier."); return; }
 
     const paiementLabel = paiement === "avant" ? "Avant livraison (TMoney)" : "À la livraison";
+
+    // Envoi vers Supabase (admin dashboard)
+    const produits = items.map(({ product, quantity }) => `${product.name} ×${quantity}`).join(", ")
+    supabase.from('commandes').insert([{
+      id: `STF-${Date.now().toString().slice(-6)}`,
+      nom_client: prenom.trim(),
+      telephone: telephone.trim(),
+      quartier_zone: zone.trim(),
+      produits,
+      montant_fcfa: totalPrice,
+      paiement: 'Non payé',
+      statut: 'Nouvelle commande',
+      mode_commande: 'WhatsApp',
+      priorite: 'Normale',
+      coursier_assigne: null,
+    }]).then(({ error }) => {
+      if (error) console.error('[Supabase insert error]', error)
+    })
 
     // Envoi vers Google Sheets CRM
     fetch(SHEETS_URL, {

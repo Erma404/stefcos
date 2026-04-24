@@ -15,6 +15,9 @@ import Journal from "./pages/Journal.tsx";
 import ArticleDetail from "./pages/ArticleDetail.tsx";
 import Contact from "./pages/Contact.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AdminLoginPage from "./pages/admin/AdminLoginPage.tsx";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage.tsx";
+import AdminProtectedRoute from "./components/admin/AdminProtectedRoute.tsx";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +40,10 @@ const App = () => (
             <Route path="/journal/:slug" element={<ArticleDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/admin" element={<AdminLoginPage />} />
+            <Route element={<AdminProtectedRoute />}>
+              <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </CartProvider>
