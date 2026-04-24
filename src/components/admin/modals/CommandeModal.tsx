@@ -66,14 +66,10 @@ async function generateNextId(): Promise<string> {
     .order('id', { ascending: false })
     .limit(1)
 
-  if (!data || data.length === 0) {
-    return 'STF-001'
-  }
-
+  if (!data || data.length === 0) return 'STF-001'
   const lastId = data[0].id as string
   const match = lastId.match(/STF-(\d+)/)
   if (!match) return 'STF-001'
-
   const nextNum = parseInt(match[1], 10) + 1
   return `STF-${String(nextNum).padStart(3, '0')}`
 }
@@ -157,9 +153,9 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="bg-gray-900 border border-gray-800 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-white border border-gray-200 text-gray-900 max-w-2xl max-h-[90vh] overflow-y-auto shadow-lg">
         <DialogHeader>
-          <DialogTitle className="text-white">
+          <DialogTitle className="text-gray-900">
             {isEditing ? `Modifier ${commande?.id}` : 'Nouvelle commande'}
           </DialogTitle>
         </DialogHeader>
@@ -172,11 +168,11 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="nom_client"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Nom client *</FormLabel>
+                    <FormLabel className="text-gray-700">Nom client *</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                        className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                       />
                     </FormControl>
                     <FormMessage />
@@ -189,11 +185,11 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="telephone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Téléphone</FormLabel>
+                    <FormLabel className="text-gray-700">Téléphone</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                        className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                       />
                     </FormControl>
                     <FormMessage />
@@ -207,11 +203,11 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
               name="quartier_zone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-300">Quartier / Zone</FormLabel>
+                  <FormLabel className="text-gray-700">Quartier / Zone</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                     />
                   </FormControl>
                   <FormMessage />
@@ -224,12 +220,12 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
               name="produits"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-300">Produits</FormLabel>
+                  <FormLabel className="text-gray-700">Produits</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
                       rows={3}
-                      className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 resize-none"
+                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 resize-none"
                     />
                   </FormControl>
                   <FormMessage />
@@ -243,7 +239,7 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="montant_fcfa"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Montant (FCFA)</FormLabel>
+                    <FormLabel className="text-gray-700">Montant (FCFA)</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -251,7 +247,7 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                         onChange={(e) =>
                           field.onChange(e.target.value ? Number(e.target.value) : null)
                         }
-                        className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                        className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                       />
                     </FormControl>
                     <FormMessage />
@@ -264,14 +260,14 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="paiement"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Paiement</FormLabel>
+                    <FormLabel className="text-gray-700">Paiement</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-white border-gray-200 text-gray-900">
                         <SelectItem value="Non payé">Non payé</SelectItem>
                         <SelectItem value="Payé">Payé</SelectItem>
                         <SelectItem value="Partiel">Partiel</SelectItem>
@@ -289,14 +285,14 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="statut"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Statut</FormLabel>
+                    <FormLabel className="text-gray-700">Statut</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-white border-gray-200 text-gray-900">
                         <SelectItem value="Nouvelle commande">Nouvelle commande</SelectItem>
                         <SelectItem value="En préparation">En préparation</SelectItem>
                         <SelectItem value="En livraison">En livraison</SelectItem>
@@ -315,14 +311,14 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="coursier_assigne"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Coursier assigné</FormLabel>
+                    <FormLabel className="text-gray-700">Coursier assigné</FormLabel>
                     <Select onValueChange={(v) => field.onChange(v === '__none__' ? '' : v)} value={field.value || '__none__'}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                           <SelectValue placeholder="— Aucun —" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-white border-gray-200 text-gray-900">
                         <SelectItem value="__none__">— Aucun —</SelectItem>
                         {coursiers.map((c) => (
                           <SelectItem key={c.id} value={c.nom}>
@@ -343,14 +339,14 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="mode_commande"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Mode commande</FormLabel>
+                    <FormLabel className="text-gray-700">Mode commande</FormLabel>
                     <Select onValueChange={(v) => field.onChange(v === '__none__' ? undefined : v)} value={field.value ?? '__none__'}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                           <SelectValue placeholder="— Sélectionner —" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-white border-gray-200 text-gray-900">
                         <SelectItem value="__none__">— Sélectionner —</SelectItem>
                         <SelectItem value="WhatsApp">WhatsApp</SelectItem>
                         <SelectItem value="Appel">Appel</SelectItem>
@@ -368,14 +364,14 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 name="priorite"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300">Priorité</FormLabel>
+                    <FormLabel className="text-gray-700">Priorité</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                           <SelectValue />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-white border-gray-200 text-gray-900">
                         <SelectItem value="Normale">Normale</SelectItem>
                         <SelectItem value="Urgente">Urgente</SelectItem>
                       </SelectContent>
@@ -391,14 +387,14 @@ export default function CommandeModal({ open, onClose, commande }: CommandeModal
                 type="button"
                 variant="outline"
                 onClick={onClose}
-                className="flex-1 bg-transparent border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white"
+                className="flex-1 border-gray-300 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               >
                 Annuler
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="flex-1 bg-white text-black hover:bg-gray-100"
+                className="flex-1 bg-gray-900 text-white hover:bg-gray-800"
               >
                 {isPending
                   ? 'Enregistrement...'

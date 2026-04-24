@@ -67,12 +67,7 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
         disponibilite: coursier.disponibilite,
       })
     } else {
-      form.reset({
-        nom: '',
-        telephone: '',
-        zone: '',
-        disponibilite: 'Disponible',
-      })
+      form.reset({ nom: '', telephone: '', zone: '', disponibilite: 'Disponible' })
     }
   }, [coursier, open, form])
 
@@ -95,9 +90,9 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="bg-gray-900 border border-gray-800 text-white max-w-md">
+      <DialogContent className="bg-white border border-gray-200 text-gray-900 max-w-md shadow-lg">
         <DialogHeader>
-          <DialogTitle className="text-white">
+          <DialogTitle className="text-gray-900">
             {isEditing ? 'Modifier le coursier' : 'Ajouter un coursier'}
           </DialogTitle>
         </DialogHeader>
@@ -109,11 +104,11 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
               name="nom"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-300">Nom *</FormLabel>
+                  <FormLabel className="text-gray-700">Nom *</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                     />
                   </FormControl>
                   <FormMessage />
@@ -126,11 +121,11 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
               name="telephone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-300">Téléphone</FormLabel>
+                  <FormLabel className="text-gray-700">Téléphone</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                     />
                   </FormControl>
                   <FormMessage />
@@ -143,11 +138,11 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
               name="zone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-300">Zone</FormLabel>
+                  <FormLabel className="text-gray-700">Zone</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+                      className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
                     />
                   </FormControl>
                   <FormMessage />
@@ -160,14 +155,14 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
               name="disponibilite"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-300">Disponibilité</FormLabel>
+                  <FormLabel className="text-gray-700">Disponibilité</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
-                      <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                      <SelectTrigger className="bg-white border-gray-300 text-gray-900">
                         <SelectValue />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                    <SelectContent className="bg-white border-gray-200 text-gray-900">
                       <SelectItem value="Disponible">Disponible</SelectItem>
                       <SelectItem value="En livraison">En livraison</SelectItem>
                       <SelectItem value="Hors service">Hors service</SelectItem>
@@ -183,14 +178,14 @@ export default function CoursierModal({ open, onClose, coursier }: CoursierModal
                 type="button"
                 variant="outline"
                 onClick={onClose}
-                className="flex-1 bg-transparent border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white"
+                className="flex-1 border-gray-300 text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               >
                 Annuler
               </Button>
               <Button
                 type="submit"
                 disabled={isPending}
-                className="flex-1 bg-white text-black hover:bg-gray-100"
+                className="flex-1 bg-gray-900 text-white hover:bg-gray-800"
               >
                 {isPending ? 'Enregistrement...' : isEditing ? 'Modifier' : 'Ajouter'}
               </Button>

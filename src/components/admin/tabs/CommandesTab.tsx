@@ -39,20 +39,20 @@ function formatDate(dateStr: string): string {
 
 function statutBadge(statut: CommandeStatut) {
   const map: Record<CommandeStatut, string> = {
-    'Nouvelle commande': 'bg-blue-900 text-blue-300 border-blue-800',
-    'En préparation': 'bg-amber-900 text-amber-300 border-amber-800',
-    'En livraison': 'bg-violet-900 text-violet-300 border-violet-800',
-    Livrée: 'bg-green-900 text-green-300 border-green-800',
-    Annulée: 'bg-gray-800 text-gray-400 border-gray-700',
-    Problème: 'bg-red-900 text-red-300 border-red-800',
+    'Nouvelle commande': 'bg-blue-50 text-blue-700 border-blue-200',
+    'En préparation': 'bg-amber-50 text-amber-700 border-amber-200',
+    'En livraison': 'bg-violet-50 text-violet-700 border-violet-200',
+    Livrée: 'bg-green-50 text-green-700 border-green-200',
+    Annulée: 'bg-gray-100 text-gray-500 border-gray-200',
+    Problème: 'bg-red-50 text-red-700 border-red-200',
   }
-  return map[statut] || 'bg-gray-800 text-gray-400 border-gray-700'
+  return map[statut] || 'bg-gray-100 text-gray-500 border-gray-200'
 }
 
 function paiementBadge(paiement: CommandePaiement) {
-  if (paiement === 'Payé') return 'bg-green-900 text-green-300 border-green-800'
-  if (paiement === 'Partiel') return 'bg-amber-900 text-amber-300 border-amber-800'
-  return 'bg-red-900 text-red-300 border-red-800'
+  if (paiement === 'Payé') return 'bg-green-50 text-green-700 border-green-200'
+  if (paiement === 'Partiel') return 'bg-amber-50 text-amber-700 border-amber-200'
+  return 'bg-red-50 text-red-700 border-red-200'
 }
 
 const DATE_BUTTONS: { label: string; value: DateRange }[] = [
@@ -108,10 +108,10 @@ export default function CommandesTab() {
           value={statut}
           onValueChange={(v) => setStatut(v as CommandeStatut | 'all')}
         >
-          <SelectTrigger className="w-48 bg-gray-900 border-gray-700 text-white">
+          <SelectTrigger className="w-48 bg-white border-gray-300 text-gray-900">
             <SelectValue placeholder="Tous les statuts" />
           </SelectTrigger>
-          <SelectContent className="bg-gray-800 border-gray-700 text-white">
+          <SelectContent className="bg-white border-gray-200 text-gray-900">
             <SelectItem value="all">Tous les statuts</SelectItem>
             <SelectItem value="Nouvelle commande">Nouvelle commande</SelectItem>
             <SelectItem value="En préparation">En préparation</SelectItem>
@@ -126,10 +126,10 @@ export default function CommandesTab() {
           value={paiement}
           onValueChange={(v) => setPaiement(v as CommandePaiement | 'all')}
         >
-          <SelectTrigger className="w-40 bg-gray-900 border-gray-700 text-white">
+          <SelectTrigger className="w-40 bg-white border-gray-300 text-gray-900">
             <SelectValue placeholder="Paiement" />
           </SelectTrigger>
-          <SelectContent className="bg-gray-800 border-gray-700 text-white">
+          <SelectContent className="bg-white border-gray-200 text-gray-900">
             <SelectItem value="all">Tous</SelectItem>
             <SelectItem value="Payé">Payé</SelectItem>
             <SelectItem value="Non payé">Non payé</SelectItem>
@@ -144,8 +144,8 @@ export default function CommandesTab() {
               onClick={() => setDateRange(btn.value)}
               className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
                 dateRange === btn.value
-                  ? 'bg-white text-black'
-                  : 'bg-gray-900 border border-gray-700 text-gray-300 hover:bg-gray-800'
+                  ? 'bg-gray-900 text-white'
+                  : 'bg-white border border-gray-300 text-gray-600 hover:bg-gray-50'
               }`}
             >
               {btn.label}
@@ -157,13 +157,13 @@ export default function CommandesTab() {
           placeholder="Rechercher client ou tel..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-52 bg-gray-900 border-gray-700 text-white placeholder:text-gray-500"
+          className="w-52 bg-white border-gray-300 text-gray-900 placeholder:text-gray-400"
         />
 
         <div className="ml-auto">
           <Button
             onClick={openCreate}
-            className="bg-white text-black hover:bg-gray-100 gap-2"
+            className="bg-gray-900 text-white hover:bg-gray-800 gap-2"
           >
             <Plus className="w-4 h-4" />
             Nouvelle commande
@@ -172,22 +172,22 @@ export default function CommandesTab() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-800 overflow-x-auto">
+      <div className="rounded-xl border border-gray-200 overflow-x-auto bg-white shadow-sm">
         <Table>
           <TableHeader>
-            <TableRow className="border-gray-800 hover:bg-transparent">
-              <TableHead className="text-gray-400">ID</TableHead>
-              <TableHead className="text-gray-400">Date</TableHead>
-              <TableHead className="text-gray-400">Client</TableHead>
-              <TableHead className="text-gray-400">Tél</TableHead>
-              <TableHead className="text-gray-400">Zone</TableHead>
-              <TableHead className="text-gray-400">Produits</TableHead>
-              <TableHead className="text-gray-400">Montant</TableHead>
-              <TableHead className="text-gray-400">Paiement</TableHead>
-              <TableHead className="text-gray-400">Statut</TableHead>
-              <TableHead className="text-gray-400">Coursier</TableHead>
-              <TableHead className="text-gray-400">Priorité</TableHead>
-              <TableHead className="text-gray-400">Actions</TableHead>
+            <TableRow className="border-gray-200 hover:bg-transparent bg-gray-50">
+              <TableHead className="text-gray-500">ID</TableHead>
+              <TableHead className="text-gray-500">Date</TableHead>
+              <TableHead className="text-gray-500">Client</TableHead>
+              <TableHead className="text-gray-500">Tél</TableHead>
+              <TableHead className="text-gray-500">Zone</TableHead>
+              <TableHead className="text-gray-500">Produits</TableHead>
+              <TableHead className="text-gray-500">Montant</TableHead>
+              <TableHead className="text-gray-500">Paiement</TableHead>
+              <TableHead className="text-gray-500">Statut</TableHead>
+              <TableHead className="text-gray-500">Coursier</TableHead>
+              <TableHead className="text-gray-500">Priorité</TableHead>
+              <TableHead className="text-gray-500">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -202,66 +202,60 @@ export default function CommandesTab() {
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={12} className="text-center py-10 text-gray-500">
+                <TableCell colSpan={12} className="text-center py-10 text-gray-400">
                   Aucune commande trouvée.
                 </TableCell>
               </TableRow>
             ) : (
               filtered.map((c) => (
-                <TableRow key={c.id} className="border-gray-800 hover:bg-gray-900/50">
-                  <TableCell className="text-gray-300 font-mono text-xs">{c.id}</TableCell>
-                  <TableCell className="text-gray-400 text-xs whitespace-nowrap">
+                <TableRow key={c.id} className="border-gray-100 hover:bg-gray-50">
+                  <TableCell className="text-gray-500 font-mono text-xs">{c.id}</TableCell>
+                  <TableCell className="text-gray-500 text-xs whitespace-nowrap">
                     {formatDate(c.created_at)}
                   </TableCell>
-                  <TableCell className="text-white font-medium">{c.nom_client}</TableCell>
-                  <TableCell className="text-gray-400 text-sm">{c.telephone ?? '—'}</TableCell>
-                  <TableCell className="text-gray-400 text-sm">{c.quartier_zone ?? '—'}</TableCell>
-                  <TableCell className="text-gray-400 text-sm max-w-[120px] truncate">
+                  <TableCell className="text-gray-900 font-medium">{c.nom_client}</TableCell>
+                  <TableCell className="text-gray-500 text-sm">{c.telephone ?? '—'}</TableCell>
+                  <TableCell className="text-gray-500 text-sm">{c.quartier_zone ?? '—'}</TableCell>
+                  <TableCell className="text-gray-500 text-sm max-w-[120px] truncate">
                     {c.produits ?? '—'}
                   </TableCell>
-                  <TableCell className="text-white text-sm whitespace-nowrap">
+                  <TableCell className="text-gray-900 text-sm whitespace-nowrap">
                     {formatFcfa(c.montant_fcfa)}
                   </TableCell>
                   <TableCell>
-                    <span
-                      className={`text-xs px-2 py-1 rounded-full border ${paiementBadge(
-                        c.paiement
-                      )}`}
-                    >
+                    <span className={`text-xs px-2 py-1 rounded-full border ${paiementBadge(c.paiement)}`}>
                       {c.paiement}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <span
-                      className={`text-xs px-2 py-1 rounded-full border ${statutBadge(c.statut)}`}
-                    >
+                    <span className={`text-xs px-2 py-1 rounded-full border ${statutBadge(c.statut)}`}>
                       {c.statut}
                     </span>
                   </TableCell>
-                  <TableCell className="text-gray-400 text-sm">
+                  <TableCell className="text-gray-500 text-sm">
                     {c.coursier_assigne ?? '—'}
                   </TableCell>
                   <TableCell>
                     {c.priorite === 'Urgente' ? (
-                      <Badge className="bg-red-900 text-red-300 border border-red-800 hover:bg-red-900">
+                      <Badge className="bg-red-50 text-red-700 border border-red-200 hover:bg-red-50">
                         Urgente
                       </Badge>
                     ) : (
-                      <span className="text-gray-500 text-sm">Normale</span>
+                      <span className="text-gray-400 text-sm">Normale</span>
                     )}
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
                       <button
                         onClick={() => openEdit(c)}
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+                        className="p-1.5 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors"
                         title="Modifier"
                       >
                         <Pencil className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => handleDelete(c.id)}
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-gray-800 transition-colors"
+                        className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-gray-100 transition-colors"
                         title="Supprimer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -275,7 +269,7 @@ export default function CommandesTab() {
         </Table>
       </div>
 
-      <p className="text-gray-500 text-sm">
+      <p className="text-gray-400 text-sm">
         {filtered.length} commande{filtered.length > 1 ? 's' : ''}
       </p>
 

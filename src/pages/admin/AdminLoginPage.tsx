@@ -33,27 +33,27 @@ export default function AdminLoginPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4">
       <div className="mb-8 text-center">
-        <h1 className="text-white font-serif tracking-widest text-3xl font-bold uppercase">
+        <h1 className="text-gray-900 font-serif tracking-widest text-3xl font-bold uppercase">
           STEFCOS
         </h1>
-        <p className="text-gray-400 text-sm mt-2 tracking-wider uppercase">
+        <p className="text-gray-500 text-sm mt-2 tracking-wider uppercase">
           Espace Administration
         </p>
       </div>
 
-      <div className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-xl p-8">
+      <div className="w-full max-w-md bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-sm text-gray-300" htmlFor="email">
+            <label className="text-sm text-gray-700" htmlFor="email">
               Adresse email
             </label>
             <Input
@@ -63,12 +63,12 @@ export default function AdminLoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@stefcos.com"
               required
-              className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-gray-500"
+              className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-gray-500"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm text-gray-300" htmlFor="password">
+            <label className="text-sm text-gray-700" htmlFor="password">
               Mot de passe
             </label>
             <Input
@@ -78,12 +78,12 @@ export default function AdminLoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus:border-gray-500"
+              className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-400 focus:border-gray-500"
             />
           </div>
 
           {error && (
-            <p className="text-red-400 text-sm bg-red-950/40 border border-red-900 rounded-lg px-3 py-2">
+            <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-3 py-2">
               {error}
             </p>
           )}
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
           <Button
             type="submit"
             disabled={submitting}
-            className="w-full bg-white text-black hover:bg-gray-100 font-medium"
+            className="w-full bg-gray-900 text-white hover:bg-gray-800 font-medium"
           >
             {submitting ? 'Connexion...' : 'Accéder'}
           </Button>

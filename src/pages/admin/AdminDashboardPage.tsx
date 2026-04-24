@@ -23,17 +23,17 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Header */}
-      <header className="fixed top-0 inset-x-0 z-50 h-14 bg-gray-950 border-b border-gray-800 flex items-center justify-between px-6">
-        <span className="font-serif tracking-widest text-white font-bold uppercase text-lg">
+      <header className="fixed top-0 inset-x-0 z-50 h-14 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-sm">
+        <span className="font-serif tracking-widest text-gray-900 font-bold uppercase text-lg">
           STEFCOS
         </span>
         <Button
           variant="ghost"
           size="sm"
           onClick={handleSignOut}
-          className="text-gray-400 hover:text-white hover:bg-gray-800 gap-2"
+          className="text-gray-500 hover:text-gray-900 hover:bg-gray-100 gap-2"
         >
           <LogOut className="w-4 h-4" />
           Déconnexion
@@ -41,15 +41,15 @@ export default function AdminDashboardPage() {
       </header>
 
       {/* Tabs nav */}
-      <div className="fixed top-14 inset-x-0 z-40 bg-gray-950 border-b border-gray-800 px-6 flex gap-1">
+      <div className="fixed top-14 inset-x-0 z-40 bg-white border-b border-gray-200 px-6 flex gap-1">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${
               activeTab === tab.id
-                ? 'border-white text-white'
-                : 'border-transparent text-gray-400 hover:text-gray-200'
+                ? 'border-gray-900 text-gray-900'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             {tab.label}
