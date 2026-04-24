@@ -6,7 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { CartProvider } from "@/contexts/CartContext";
 import CartDrawer from "@/components/CartDrawer";
 import ScrollToTop from "@/components/ScrollToTop";
-import WhatsAppVipPopup from "@/components/WhatsAppVipPopup";
 import Index from "./pages/Index.tsx";
 import Boutique from "./pages/Boutique.tsx";
 import ProductDetail from "./pages/ProductDetail.tsx";
@@ -30,8 +29,7 @@ const App = () => (
         <BrowserRouter>
           <ScrollToTop />
           <CartDrawer />
-          <WhatsAppVipPopup />
-          <Routes>
+<Routes>
             <Route path="/" element={<Index />} />
             <Route path="/boutique" element={<Boutique />} />
             <Route path="/boutique/:id" element={<ProductDetail />} />
