@@ -35,6 +35,36 @@
 
   <!-- Articles du Journal -->
   <url>
+    <loc>https://www.stefcos.com/journal/acheter-cosmetiques-lome-livraison-faq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.stefcos.com/journal/contrefacon-cosmetiques-guide-authenticite</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.stefcos.com/journal/soins-peau-grossesse-securite</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.stefcos.com/journal/peau-grasse-pores-dilates-routine</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.stefcos.com/journal/vergetures-peau-noire-solutions</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.stefcos.com/journal/eclaircir-peau-naturellement-sans-danger</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.stefcos.com/journal/routine-peau-eclatante</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -507,6 +507,148 @@ const configs: Record<string, Config> = {
       </svg>
     ),
   },
+
+  /* ---- Éclaircissement naturel / teint unifié ---- */
+  "eclaircissement-naturel": {
+    bg: "linear-gradient(135deg, #fff6e6 0%, #f5d99a 55%, #e0a84a 100%)",
+    accent: "#b8791f",
+    light: "#fffaf0",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Radiant glow rings */}
+        {[65, 45, 28].map((r, i) => (
+          <circle key={i} cx="140" cy="90" r={r} stroke="#b8791f" strokeOpacity={0.15 + i * 0.1} strokeWidth="2" fill="none" />
+        ))}
+        <circle cx="140" cy="90" r="14" fill="#b8791f" fillOpacity="0.5" />
+        {/* Light rays */}
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
+          <line key={i}
+            x1={140 + 78 * Math.cos((deg * Math.PI) / 180)}
+            y1={90 + 78 * Math.sin((deg * Math.PI) / 180)}
+            x2={140 + 92 * Math.cos((deg * Math.PI) / 180)}
+            y2={90 + 92 * Math.sin((deg * Math.PI) / 180)}
+            stroke="#b8791f" strokeOpacity="0.3" strokeWidth="2" strokeLinecap="round"
+          />
+        ))}
+        {/* Drop */}
+        <path d="M 210 130 Q 218 142 218 150 Q 218 160 210 160 Q 202 160 202 150 Q 202 142 210 130 Z"
+          fill="#b8791f" fillOpacity="0.35" />
+      </svg>
+    ),
+  },
+
+  /* ---- Vergetures ---- */
+  "vergetures": {
+    bg: "linear-gradient(140deg, #3a1f14 0%, #8a4a28 55%, #c8794a 100%)",
+    accent: "#f0b98a",
+    light: "#fff3e8",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Stretch texture lines */}
+        {[40, 65, 90, 115, 140].map((y, i) => (
+          <path key={i}
+            d={`M 30 ${y} Q 90 ${y - 14 + (i % 2) * 6} 140 ${y} Q 190 ${y + 14 - (i % 2) * 6} 250 ${y}`}
+            stroke="#f0b98a" strokeOpacity={0.2 + (i % 3) * 0.08} strokeWidth="2" fill="none" />
+        ))}
+        {/* Healing droplet */}
+        <ellipse cx="200" cy="55" rx="14" ry="20" fill="#f0b98a" fillOpacity="0.25" />
+        <ellipse cx="70" cy="150" rx="10" ry="14" fill="#f0b98a" fillOpacity="0.2" />
+        {/* Care swirl */}
+        <path d="M 120 150 C 140 130, 170 130, 175 155 C 178 172, 155 178, 145 165"
+          stroke="#f0b98a" strokeOpacity="0.4" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+
+  /* ---- Peau grasse / pores dilatés ---- */
+  "peau-grasse": {
+    bg: "linear-gradient(135deg, #d8f0ea 0%, #7fc9bb 55%, #2f8f7d 100%)",
+    accent: "#1f6b5c",
+    light: "#f0fbf8",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Pore grid */}
+        {Array.from({ length: 6 }).map((_, row) =>
+          Array.from({ length: 9 }).map((_, col) => (
+            <circle key={`${row}-${col}`}
+              cx={30 + col * 28} cy={30 + row * 24}
+              r={row % 2 === 0 ? 3 : 2}
+              fill="#1f6b5c" fillOpacity="0.18" />
+          ))
+        )}
+        {/* Blotting sheen */}
+        <ellipse cx="140" cy="90" rx="70" ry="42" fill="#1f6b5c" fillOpacity="0.12" />
+        <path d="M 90 90 Q 140 60 190 90" stroke="#1f6b5c" strokeOpacity="0.3" strokeWidth="3" fill="none" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+
+  /* ---- Grossesse ---- */
+  "grossesse": {
+    bg: "linear-gradient(140deg, #fdeef2 0%, #f3b9cb 55%, #d97a9a 100%)",
+    accent: "#a8385a",
+    light: "#fff5f8",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Belly arc */}
+        <path d="M 90 140 C 90 80, 190 80, 190 140" stroke="#a8385a" strokeOpacity="0.35" strokeWidth="3" fill="none" strokeLinecap="round" />
+        {/* Concentric care rings */}
+        {[50, 35, 22].map((r, i) => (
+          <circle key={i} cx="140" cy="115" r={r} stroke="#a8385a" strokeOpacity={0.15 + i * 0.08} strokeWidth="1.5" fill="none" />
+        ))}
+        {/* Little heart */}
+        <path d="M 140 100 C 136 94, 126 94, 126 104 C 126 112, 140 122, 140 122 C 140 122, 154 112, 154 104 C 154 94, 144 94, 140 100 Z"
+          fill="#a8385a" fillOpacity="0.4" />
+        {/* Drops nourishing */}
+        <ellipse cx="60" cy="55" rx="9" ry="13" fill="#a8385a" fillOpacity="0.2" />
+        <ellipse cx="220" cy="60" rx="7" ry="10" fill="#a8385a" fillOpacity="0.18" />
+      </svg>
+    ),
+  },
+
+  /* ---- Authenticité / anti-contrefaçon ---- */
+  "authenticite": {
+    bg: "linear-gradient(140deg, #101a2e 0%, #1c3a5e 55%, #2a5a8a 100%)",
+    accent: "#e8c46a",
+    light: "#fff8e8",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Shield */}
+        <path d="M 140 30 L 185 48 V 92 C 185 125, 165 148, 140 158 C 115 148, 95 125, 95 92 V 48 Z"
+          stroke="#e8c46a" strokeOpacity="0.5" strokeWidth="2.5" fill="#e8c46a" fillOpacity="0.08" />
+        {/* Checkmark */}
+        <path d="M 118 92 L 133 108 L 163 72" stroke="#e8c46a" strokeOpacity="0.8" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Seal dots */}
+        {[0, 60, 120, 180, 240, 300].map((deg, i) => (
+          <circle key={i}
+            cx={140 + 68 * Math.cos((deg * Math.PI) / 180)}
+            cy={95 + 68 * Math.sin((deg * Math.PI) / 180)}
+            r="3" fill="#e8c46a" fillOpacity="0.3" />
+        ))}
+      </svg>
+    ),
+  },
+
+  /* ---- Livraison Lomé ---- */
+  "livraison-lome": {
+    bg: "linear-gradient(135deg, #fff0e0 0%, #f5a05a 55%, #d9622a 100%)",
+    accent: "#8a3812",
+    light: "#fff8f0",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Route */}
+        <path d="M 30 150 Q 100 110 140 120 Q 190 132 250 60" stroke="#8a3812" strokeOpacity="0.3" strokeWidth="3" strokeDasharray="2 10" fill="none" strokeLinecap="round" />
+        {/* Package box */}
+        <rect x="115" y="95" width="50" height="40" rx="4" fill="#8a3812" fillOpacity="0.18" stroke="#8a3812" strokeOpacity="0.4" strokeWidth="1.5" />
+        <line x1="115" y1="115" x2="165" y2="115" stroke="#8a3812" strokeOpacity="0.4" strokeWidth="1.5" />
+        <line x1="140" y1="95" x2="140" y2="135" stroke="#8a3812" strokeOpacity="0.4" strokeWidth="1.5" />
+        {/* Location pin */}
+        <path d="M 235 45 C 235 33, 253 33, 253 45 C 253 55, 244 68, 244 68 C 244 68, 235 55, 235 45 Z"
+          fill="#8a3812" fillOpacity="0.35" />
+        <circle cx="244" cy="45" r="5" fill="#fff0e0" fillOpacity="0.7" />
+      </svg>
+    ),
+  },
 };
 
 /* Fallback générique */

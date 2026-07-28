@@ -23,6 +23,12 @@ const routes = [
   "boutique/lait-glycederm-enfant",
   "boutique/dovena",
   // Articles
+  "journal/acheter-cosmetiques-lome-livraison-faq",
+  "journal/contrefacon-cosmetiques-guide-authenticite",
+  "journal/soins-peau-grossesse-securite",
+  "journal/peau-grasse-pores-dilates-routine",
+  "journal/vergetures-peau-noire-solutions",
+  "journal/eclaircir-peau-naturellement-sans-danger",
   "journal/routine-peau-eclatante",
   "journal/soins-peaux-noires",
   "journal/gamme-bio-activ",

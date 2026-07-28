@@ -4,6 +4,10 @@ import Layout from "@/components/Layout";
 import { ArrowLeft, Clock, Calendar, ArrowRight, Share2 } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { articles } from "@/data/articles";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import ArticleIllustration from "@/components/ArticleIllustration";
+
+const BASE_URL = "https://www.stefcos.com";
 
 const ArticleDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -25,7 +29,51 @@ const ArticleDetail = () => {
     setMeta("og:url", `https://www.stefcos.com/journal/${article.slug}`, true);
     setMeta("og:image", article.image, true);
     setMeta("og:type", "article", true);
-    return () => { document.title = "STEFCOS - Cosmétiques Premium Peaux Noires & Mixtes | Lomé, Togo"; };
+
+    const schema: Record<string, unknown> = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: article.title,
+      description: article.excerpt,
+      datePublished: article.dateISO,
+      dateModified: article.dateISO,
+      url: `${BASE_URL}/journal/${article.slug}`,
+      image: article.image,
+      articleSection: article.category,
+      author: { "@type": "Organization", name: "STEFCOS TOGO SARL" },
+      publisher: { "@type": "Organization", name: "STEFCOS TOGO SARL", url: BASE_URL },
+    };
+    let schemaEl = document.getElementById("schema-article") as HTMLScriptElement | null;
+    if (!schemaEl) {
+      schemaEl = document.createElement("script");
+      schemaEl.id = "schema-article";
+      schemaEl.type = "application/ld+json";
+      document.head.appendChild(schemaEl);
+    }
+    schemaEl.textContent = JSON.stringify(schema);
+
+    let faqEl: HTMLScriptElement | null = null;
+    if (article.faq?.length) {
+      faqEl = document.createElement("script");
+      faqEl.type = "application/ld+json";
+      faqEl.id = "schema-article-faq";
+      faqEl.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: article.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      });
+      document.head.appendChild(faqEl);
+    }
+
+    return () => {
+      document.title = "STEFCOS - Cosmétiques Premium Peaux Noires & Mixtes | Lomé, Togo";
+      schemaEl?.remove();
+      faqEl?.remove();
+    };
   }, [article]);
 
   if (!article) return <Navigate to="/journal" replace />;
@@ -80,31 +128,65 @@ const ArticleDetail = () => {
           </p>
 
           {/* Content */}
-          <div className="space-y-6">
-            <p className="font-sans text-base leading-[1.8] text-foreground/80">
-              {article.content}
-            </p>
-            <p className="font-sans text-base leading-[1.8] text-foreground/80">
-              Chez STEFCOS, nous nous engageons à offrir des produits de qualité supérieure, formulés avec soin pour répondre aux besoins spécifiques des peaux noires et mixtes. Chaque formule est le fruit d'une recherche approfondie et d'une sélection rigoureuse des meilleurs ingrédients naturels, majoritairement sourcés au Togo et en Afrique de l'Ouest.
-            </p>
-            <p className="font-sans text-base leading-[1.8] text-foreground/80">
-              Notre équipe d'experts en dermatologie cosmétique travaille sans relâche pour développer des soins innovants qui allient tradition africaine et science moderne. Nous croyons fermement que la beauté authentique passe par le respect de votre peau et de ses besoins uniques.
-            </p>
-
-            {/* Pull quote */}
-            <blockquote className="my-12 py-8 border-y border-border text-center">
-              <p className="font-serif text-2xl md:text-3xl font-light italic text-foreground/90 leading-relaxed">
-                "La beauté authentique commence par le respect de sa peau"
+          {article.sections?.length ? (
+            <div className="space-y-10">
+              {article.sections.map((section, i) => (
+                <div key={i}>
+                  <h2 className="font-serif text-xl md:text-2xl font-medium mb-3 text-foreground">
+                    {section.heading}
+                  </h2>
+                  <p className="font-sans text-base leading-[1.8] text-foreground/80">
+                    {section.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <p className="font-sans text-base leading-[1.8] text-foreground/80">
+                {article.content}
               </p>
-              <cite className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mt-4 block not-italic">
-                — STEFCOS
-              </cite>
-            </blockquote>
+              <p className="font-sans text-base leading-[1.8] text-foreground/80">
+                Chez STEFCOS, nous nous engageons à offrir des produits de qualité supérieure, formulés avec soin pour répondre aux besoins spécifiques des peaux noires et mixtes. Chaque formule est le fruit d'une recherche approfondie et d'une sélection rigoureuse des meilleurs ingrédients naturels, majoritairement sourcés au Togo et en Afrique de l'Ouest.
+              </p>
+              <p className="font-sans text-base leading-[1.8] text-foreground/80">
+                Notre équipe d'experts en dermatologie cosmétique travaille sans relâche pour développer des soins innovants qui allient tradition africaine et science moderne. Nous croyons fermement que la beauté authentique passe par le respect de votre peau et de ses besoins uniques.
+              </p>
 
-            <p className="font-sans text-base leading-[1.8] text-foreground/80">
-              En choisissant STEFCOS, vous optez pour une cosmétique responsable qui valorise le patrimoine naturel africain tout en offrant des résultats visibles et durables. Notre mission est de rendre accessible à tous des soins haut de gamme, pensés pour sublimer chaque type de peau dans le respect de sa nature profonde.
-            </p>
-          </div>
+              {/* Pull quote */}
+              <blockquote className="my-12 py-8 border-y border-border text-center">
+                <p className="font-serif text-2xl md:text-3xl font-light italic text-foreground/90 leading-relaxed">
+                  "La beauté authentique commence par le respect de sa peau"
+                </p>
+                <cite className="font-sans text-[10px] tracking-[0.3em] uppercase text-muted-foreground mt-4 block not-italic">
+                  — STEFCOS
+                </cite>
+              </blockquote>
+
+              <p className="font-sans text-base leading-[1.8] text-foreground/80">
+                En choisissant STEFCOS, vous optez pour une cosmétique responsable qui valorise le patrimoine naturel africain tout en offrant des résultats visibles et durables. Notre mission est de rendre accessible à tous des soins haut de gamme, pensés pour sublimer chaque type de peau dans le respect de sa nature profonde.
+              </p>
+            </div>
+          )}
+
+          {/* FAQ */}
+          {article.faq?.length ? (
+            <section className="mt-16 pt-12 border-t border-border">
+              <h2 className="font-serif text-2xl md:text-3xl font-light mb-8">Questions fréquentes</h2>
+              <Accordion type="single" collapsible className="w-full">
+                {article.faq.map((item, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`}>
+                    <AccordionTrigger className="font-sans text-left text-base font-medium">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="font-sans text-base leading-[1.8] text-foreground/80">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </section>
+          ) : null}
 
           {/* Share + CTA */}
           <div className="mt-14 pt-8 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
@@ -142,7 +224,10 @@ const ArticleDetail = () => {
                 data-reveal-delay={i * 120}
               >
                 <div className="aspect-[3/2] overflow-hidden bg-secondary mb-5 img-zoom hover-glow">
-                  <img src={a.image} alt={a.title} loading="lazy" className="w-full h-full object-cover" />
+                  <ArticleIllustration
+                    illustrationKey={a.illustrationKey}
+                    className="w-full h-full transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="font-sans text-[10px] tracking-widest uppercase text-accent font-semibold">
