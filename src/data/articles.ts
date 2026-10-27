@@ -1,7 +1,7 @@
 import heroBanner from "@/assets/hero-banner.jpg";
 import philosophyImg from "@/assets/philosophy.jpg";
 import productsCollection from "@/assets/products-collection.jpeg";
-import harmattanImg from "@/assets/harmattan-saison-seche.jpg";
+import conseilsImg from "@/assets/conseils-stefcos.jpeg";
 
 export interface ArticleSection {
   heading: string;
@@ -41,7 +41,7 @@ export const articles: Article[] = [
     title: "Harmattan au Togo : comment protéger sa peau, ses lèvres et ses cheveux pendant la saison sèche",
     excerpt: "Pendant l'harmattan, l'air sec et poussiéreux assèche la peau, gerce les lèvres et fragilise les cheveux : nettoyez en douceur, hydratez dès la sortie de douche, scellez avec un corps gras et protégez aussi vos cheveux.",
     content: "Chaque année, le vent sec venu du Sahara change la routine beauté à Lomé. Voici comment adapter vos soins avant l'arrivée de l'harmattan.",
-    image: harmattanImg,
+    image: conseilsImg,
     illustrationKey: "hydratation",
     date: "27 Octobre 2026",
     dateISO: "2026-10-27",
