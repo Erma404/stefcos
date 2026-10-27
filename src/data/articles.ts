@@ -42,7 +42,7 @@ export const articles: Article[] = [
     excerpt: "Pendant l'harmattan, l'air sec et poussiéreux assèche la peau, gerce les lèvres et fragilise les cheveux : nettoyez en douceur, hydratez dès la sortie de douche, scellez avec un corps gras et protégez aussi vos cheveux.",
     content: "Chaque année, le vent sec venu du Sahara change la routine beauté à Lomé. Voici comment adapter vos soins avant l'arrivée de l'harmattan.",
     image: conseilsImg,
-    illustrationKey: "hydratation",
+    illustrationKey: "harmattan",
     date: "27 Octobre 2026",
     dateISO: "2026-10-27",
     category: "Conseils",

@@ -649,6 +649,36 @@ const configs: Record<string, Config> = {
       </svg>
     ),
   },
+
+  /* ---- Harmattan / saison sèche ---- */
+  "harmattan": {
+    bg: "linear-gradient(135deg, #4a2c16 0%, #b9763f 50%, #f0cf9a 100%)",
+    accent: "#fff3dc",
+    light: "#fff8ee",
+    svg: (
+      <svg viewBox="0 0 280 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        {/* Soleil voilé par la poussière */}
+        <circle cx="205" cy="52" r="34" fill="#fff3dc" fillOpacity="0.14" />
+        <circle cx="205" cy="52" r="22" fill="#fff3dc" fillOpacity="0.28" />
+        <circle cx="205" cy="52" r="12" fill="#fff3dc" fillOpacity="0.55" />
+        {/* Traînées de vent */}
+        <path d="M 20 55 Q 60 40 100 55 T 175 50" stroke="#fff3dc" strokeOpacity="0.45" strokeWidth="2" strokeLinecap="round" fill="none" />
+        <path d="M 35 80 Q 85 64 135 80 T 230 74" stroke="#fff3dc" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round" fill="none" />
+        <path d="M 15 105 Q 55 92 95 105 T 160 100" stroke="#fff3dc" strokeOpacity="0.28" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+        {/* Particules de poussière */}
+        {[[60,30],[120,28],[150,70],[40,92],[190,95],[95,92],[225,88],[75,64]].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r={i % 3 === 0 ? 2.5 : 1.5} fill="#fff3dc" fillOpacity="0.5" />
+        ))}
+        {/* Dunes */}
+        <path d="M 0 150 Q 70 118 140 142 T 280 130 L 280 180 L 0 180 Z" fill="#4a2c16" fillOpacity="0.35" />
+        <path d="M 0 165 Q 80 140 160 160 T 280 152 L 280 180 L 0 180 Z" fill="#4a2c16" fillOpacity="0.5" />
+        {/* Goutte d'hydratation */}
+        <path d="M 140 98 C 140 98, 124 120, 124 130 C 124 139, 131 145, 140 145 C 149 145, 156 139, 156 130 C 156 120, 140 98, 140 98 Z"
+          fill="#fff3dc" fillOpacity="0.8" />
+        <ellipse cx="135" cy="128" rx="3" ry="5" fill="#b9763f" fillOpacity="0.35" />
+      </svg>
+    ),
+  },
 };
 
 /* Fallback générique */
