@@ -7,7 +7,7 @@ import { ArrowRight, Clock, Calendar, ChevronLeft, ChevronRight } from "lucide-r
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { articles } from "@/data/articles";
 
-const ARTICLES_PER_PAGE = 6; // 1 featured + 5 en grille
+const ARTICLES_PER_PAGE = 10; // 1 featured + 9 en grille (3x3)
 
 const Journal = () => {
   usePageSeo(
