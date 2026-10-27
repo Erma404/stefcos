@@ -23,6 +23,7 @@ const routes = [
   "boutique/lait-glycederm-enfant",
   "boutique/dovena",
   // Articles
+  "journal/harmattan-togo-proteger-peau-cheveux-levres",
   "journal/acheter-cosmetiques-lome-livraison-faq",
   "journal/contrefacon-cosmetiques-guide-authenticite",
   "journal/soins-peau-grossesse-securite",

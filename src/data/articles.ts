@@ -1,6 +1,7 @@
 import heroBanner from "@/assets/hero-banner.jpg";
 import philosophyImg from "@/assets/philosophy.jpg";
 import productsCollection from "@/assets/products-collection.jpeg";
+import harmattanImg from "@/assets/harmattan-saison-seche.jpg";
 
 export interface ArticleSection {
   heading: string;
@@ -34,6 +35,60 @@ const images = [heroBanner, philosophyImg, productsCollection];
 const pick = (i: number) => images[i % images.length];
 
 export const articles: Article[] = [
+  {
+    id: "22",
+    slug: "harmattan-togo-proteger-peau-cheveux-levres",
+    title: "Harmattan au Togo : comment protéger sa peau, ses lèvres et ses cheveux pendant la saison sèche",
+    excerpt: "Pendant l'harmattan, l'air sec et poussiéreux assèche la peau, gerce les lèvres et fragilise les cheveux : nettoyez en douceur, hydratez dès la sortie de douche, scellez avec un corps gras et protégez aussi vos cheveux.",
+    content: "Chaque année, le vent sec venu du Sahara change la routine beauté à Lomé. Voici comment adapter vos soins avant l'arrivée de l'harmattan.",
+    image: harmattanImg,
+    illustrationKey: "hydratation",
+    date: "27 Octobre 2026",
+    dateISO: "2026-10-27",
+    category: "Conseils",
+    readTime: "6 min",
+    sections: [
+      {
+        heading: "Qu'est-ce que l'harmattan et pourquoi agresse-t-il la peau ?",
+        body: "L'harmattan est un vent sec et chargé de poussières fines qui souffle depuis le Sahara vers le golfe de Guinée, généralement entre décembre et février. L'humidité de l'air chute fortement : la peau perd son eau plus vite, la barrière cutanée se fragilise et des signes apparaissent rapidement, comme la peau qui tire, les squames blanchâtres sur les peaux foncées (la fameuse peau « cendrée »), les démangeaisons et les lèvres gercées.",
+      },
+      {
+        heading: "Pourquoi la peau noire montre plus vite la sécheresse",
+        body: "Sur une peau foncée, la desquamation se voit davantage : les cellules mortes forment un voile grisâtre ou blanchâtre très visible, surtout sur les jambes, les coudes, les genoux et les mains. Ce n'est pas un signe de manque de propreté, mais de manque d'eau et de corps gras. Plus on attend pour réhydrater, plus la peau devient rugueuse et terne.",
+      },
+      {
+        heading: "Nettoyer en douceur, sans décaper",
+        body: "Pendant la saison sèche, évitez l'eau très chaude et les savons trop détergents. Privilégiez un savon doux riche en glycérine, comme le savon Glycederm, qui nettoie sans assécher, et limitez les gommages à une fois par semaine au maximum. Séchez la peau en la tamponnant sans frotter, en laissant volontairement un peu d'humidité sur la peau avant de passer à l'étape suivante.",
+      },
+      {
+        heading: "Hydrater tout de suite après la douche",
+        body: "Les premières minutes après la douche sont les plus importantes : appliquez votre lait ou votre lotion corporelle sur peau encore légèrement humide pour retenir l'eau. Une lotion nourrissante comme Sublim Éclat, enrichie à l'huile de carotte, convient bien aux peaux qui tiraillent. Insistez sur les zones qui sèchent en premier : jambes, coudes, genoux, pieds et mains, et renouvelez l'application dans la journée si la peau tire encore.",
+      },
+      {
+        heading: "Sceller l'hydratation avec un corps gras",
+        body: "Après l'hydratation, une fine couche de beurre de karité ou d'huile végétale limite l'évaporation de l'eau. Le karité du Togo est un allié historique de la peau en saison sèche : il nourrit et protège sans alourdir lorsqu'il est utilisé en petite quantité. Sur les lèvres, appliquez-le matin et soir, et avant de dormir, pour éviter les gerçures.",
+      },
+      {
+        heading: "Protéger les cheveux crépus et frisés de la sécheresse",
+        body: "L'air sec rend les cheveux crépus plus cassants et plus difficiles à démêler. Misez sur un shampooing nutritif et doux comme Dovena, formulé au beurre de mangue et aux protéines végétales, puis hydratez les longueurs et scellez avec un corps gras. Les coiffures protectrices, comme les tresses ou les vanilles, limitent l'exposition à la poussière et au vent, à condition de ne pas trop tirer sur la racine.",
+      },
+      {
+        heading: "N'oubliez pas les enfants et les bébés",
+        body: "La peau des enfants perd son eau encore plus vite. Pendant l'harmattan, utilisez un savon surgras doux et appliquez un lait hydratant après chaque bain, comme le Lait Glycederm Enfant, dont la texture légère s'absorbe rapidement. Sur les zones qui rougissent ou démangent de façon persistante, demandez conseil à un professionnel de santé.",
+      },
+      {
+        heading: "Les gestes du quotidien qui font la différence",
+        body: "Buvez de l'eau régulièrement, rincez le visage à l'eau tiède en rentrant pour retirer la poussière, dormez si possible dans une pièce où l'air n'est pas trop sec, et protégez-vous toujours du soleil : l'harmattan masque la chaleur mais les UV restent bien présents. Si vous utilisez des soins éclaircissants ou exfoliants, réduisez la fréquence pendant les semaines les plus sèches et privilégiez la protection solaire.",
+      },
+    ],
+    faq: [
+      { q: "Quand commence l'harmattan au Togo ?", a: "L'harmattan souffle généralement entre décembre et février, avec des variations selon les années. Il est conseillé d'adapter sa routine dès la fin du mois de novembre, avant que la peau ne se dessèche." },
+      { q: "Pourquoi ma peau devient-elle grise ou blanchâtre en saison sèche ?", a: "Il s'agit de cellules mortes et de manque d'eau, plus visibles sur une peau foncée. Une hydratation immédiate après la douche, suivie d'un corps gras comme le karité, estompe rapidement ce voile." },
+      { q: "Comment éviter les lèvres gercées pendant l'harmattan ?", a: "Appliquez un baume ou du beurre de karité matin et soir, et avant de dormir. Évitez de lécher ses lèvres et buvez régulièrement de l'eau tout au long de la journée." },
+      { q: "Faut-il changer de produits pendant la saison sèche ?", a: "Pas forcément de gamme, mais de texture : privilégiez des soins plus nourrissants, appliquez-les plus souvent et sur peau légèrement humide, et espacez les gommages et les soins exfoliants." },
+      { q: "Quel soin utiliser pour les cheveux crépus pendant l'harmattan ?", a: "Un shampooing nutritif et doux, suivi d'une hydratation des longueurs et d'un corps gras pour sceller. Les coiffures protectrices aident aussi à limiter la casse due à l'air sec et à la poussière." },
+    ],
+  },
   {
     id: "16",
     slug: "acheter-cosmetiques-lome-livraison-faq",

@@ -35,6 +35,11 @@
 
   <!-- Articles du Journal -->
   <url>
+    <loc>https://www.stefcos.com/journal/harmattan-togo-proteger-peau-cheveux-levres</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.stefcos.com/journal/acheter-cosmetiques-lome-livraison-faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
